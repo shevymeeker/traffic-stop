@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AlertCircle, CheckCircle, XCircle, BookOpen, Target, FileText, ChevronRight, Clock, Camera, Phone } from 'lucide-react';
 
 export default function TrafficStopSimulator() {
   const [mode, setMode] = useState('home');
   const [scenarioStep, setScenarioStep] = useState(0);
   const [responses, setResponses] = useState([]);
-  const [docData, setDocData] = useState({});
+  const [feedback, setFeedback] = useState(null);
+  const [docData, setDocData] = useState(() => {
+    // Load saved documentation from localStorage on mount
+    const saved = localStorage.getItem('trafficStopDoc');
+    return saved ? JSON.parse(saved) : {};
+  });
+
+  // Save docData to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('trafficStopDoc', JSON.stringify(docData));
+  }, [docData]);
 
   const threeLines = [
     "Officer, I am exercising my right to remain silent.",
@@ -320,14 +330,7 @@ export default function TrafficStopSimulator() {
                   onClick={() => {
                     const isCorrect = option.legal;
                     setResponses([...responses, isCorrect]);
-                    
-                    // Show explanation briefly
-                    setTimeout(() => {
-                      const confirmed = window.confirm(
-                        `${option.legal ? '✓ CORRECT' : '✗ INCORRECT'}\n\n${option.explanation}\n\nPress OK to continue.`
-                      );
-                      setScenarioStep(scenarioStep + 1);
-                    }, 100);
+                    setFeedback({ correct: isCorrect, explanation: option.explanation });
                   }}
                   className="w-full text-left p-4 bg-slate-900 hover:bg-slate-700 rounded-lg border-2 border-slate-700 hover:border-blue-500 transition-colors"
                 >
@@ -343,6 +346,36 @@ export default function TrafficStopSimulator() {
             </p>
           </div>
         </div>
+
+        {/* Feedback Modal */}
+        {feedback && (
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+            <div className={`max-w-2xl w-full rounded-lg p-8 ${feedback.correct ? 'bg-green-900/90 border-2 border-green-500' : 'bg-red-900/90 border-2 border-red-500'}`}>
+              <div className="flex items-start gap-4 mb-6">
+                {feedback.correct ? (
+                  <CheckCircle className="w-12 h-12 text-green-400 flex-shrink-0" />
+                ) : (
+                  <XCircle className="w-12 h-12 text-red-400 flex-shrink-0" />
+                )}
+                <div>
+                  <h2 className="text-3xl font-bold mb-2">
+                    {feedback.correct ? '✓ CORRECT' : '✗ INCORRECT'}
+                  </h2>
+                  <p className="text-lg text-slate-200">{feedback.explanation}</p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setFeedback(null);
+                  setScenarioStep(scenarioStep + 1);
+                }}
+                className="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 px-6 rounded-lg"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     );
   };
