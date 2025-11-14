@@ -60,18 +60,22 @@ traffic-stop/
 
 ## Deployment
 
-### Netlify
-1. `npm run build`
-2. Deploy the `dist/` folder
+### GitHub Pages with Actions (Recommended) ⚡
 
-### Vercel
-```bash
-npx vercel
-```
+Automated deployment is configured! See [DEPLOYMENT.md](./DEPLOYMENT.md) for full instructions.
 
-### GitHub Pages
-1. `npm run build`
-2. Deploy `dist/` folder to gh-pages branch
+**Quick Start:**
+1. Enable GitHub Pages in repo Settings → Pages → Source: "GitHub Actions"
+2. Push to `main` branch
+3. Your app deploys automatically to: `https://shevymeeker.github.io/traffic-stop/`
+
+### Alternative Options
+
+**Netlify:** Drag & drop the `dist/` folder to [netlify.com](https://netlify.com)
+
+**Vercel:** `npx vercel`
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
 ## Technology Stack
 
