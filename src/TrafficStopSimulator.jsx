@@ -17,6 +17,14 @@ export default function TrafficStopSimulator() {
     localStorage.setItem('trafficStopDoc', JSON.stringify(docData));
   }, [docData]);
 
+  const handleClearDocumentation = () => {
+    // Ask for confirmation before clearing
+    if (window.confirm("Are you sure you want to clear all documentation data? This cannot be undone.")) {
+      setDocData({});
+      // Your useEffect will automatically update localStorage
+    }
+  };
+
   const threeLines = [
     "Officer, I am exercising my right to remain silent.",
     "I do not consent to any searches.",
@@ -406,6 +414,7 @@ export default function TrafficStopSimulator() {
                   type="datetime-local"
                   className="w-full bg-slate-900 border-2 border-slate-700 rounded px-4 py-2"
                   onChange={(e) => setDocData({...docData, datetime: e.target.value})}
+                  value={docData.datetime || ''}
                 />
               </div>
               <div>
@@ -415,6 +424,7 @@ export default function TrafficStopSimulator() {
                   className="w-full bg-slate-900 border-2 border-slate-700 rounded px-4 py-2"
                   placeholder="I-64 westbound, mile marker 87, near Exit 86 for Simpsonville"
                   onChange={(e) => setDocData({...docData, location: e.target.value})}
+                  value={docData.location || ''}
                 />
               </div>
             </div>
@@ -429,6 +439,7 @@ export default function TrafficStopSimulator() {
                   className="w-full bg-slate-900 border-2 border-slate-700 rounded px-4 py-2 h-20"
                   placeholder="Officer J. Smith, Badge #1234"
                   onChange={(e) => setDocData({...docData, officers: e.target.value})}
+                  value={docData.officers || ''}
                 />
               </div>
               <div>
@@ -438,6 +449,7 @@ export default function TrafficStopSimulator() {
                   className="w-full bg-slate-900 border-2 border-slate-700 rounded px-4 py-2"
                   placeholder="Unit 456"
                   onChange={(e) => setDocData({...docData, vehicles: e.target.value})}
+                  value={docData.vehicles || ''}
                 />
               </div>
               <div>
@@ -447,6 +459,7 @@ export default function TrafficStopSimulator() {
                   className="w-full bg-slate-900 border-2 border-slate-700 rounded px-4 py-2"
                   placeholder="Kentucky State Police, Daviess County Sheriff, etc."
                   onChange={(e) => setDocData({...docData, agency: e.target.value})}
+                  value={docData.agency || ''}
                 />
               </div>
             </div>
@@ -464,6 +477,7 @@ export default function TrafficStopSimulator() {
                   id="dashcam"
                   className="w-4 h-4"
                   onChange={(e) => setDocData({...docData, dashcam: e.target.checked})}
+                  checked={!!docData.dashcam}
                 />
                 <label htmlFor="dashcam" className="text-slate-300">Dash cam visible on patrol car</label>
               </div>
@@ -473,6 +487,7 @@ export default function TrafficStopSimulator() {
                   id="bodycam"
                   className="w-4 h-4"
                   onChange={(e) => setDocData({...docData, bodycam: e.target.checked})}
+                  checked={!!docData.bodycam}
                 />
                 <label htmlFor="bodycam" className="text-slate-300">Body cam visible on officer</label>
               </div>
@@ -482,6 +497,7 @@ export default function TrafficStopSimulator() {
                   id="myrecording"
                   className="w-4 h-4"
                   onChange={(e) => setDocData({...docData, myrecording: e.target.checked})}
+                  checked={!!docData.myrecording}
                 />
                 <label htmlFor="myrecording" className="text-slate-300">I recorded the interaction</label>
               </div>
@@ -494,6 +510,7 @@ export default function TrafficStopSimulator() {
               className="w-full bg-slate-900 border-2 border-slate-700 rounded px-4 py-2 h-32"
               placeholder="10:15 PM - Pulled over&#10;10:16 PM - Officer approached, requested license&#10;10:20 PM - Officer asked about destination, I stated 'I am exercising my right to remain silent'&#10;10:25 PM - Officer requested consent to search, I stated 'I do not consent to any searches'&#10;10:30 PM - Officer returned documents, I asked 'Am I free to go?', was told yes, departed"
               onChange={(e) => setDocData({...docData, timeline: e.target.value})}
+              value={docData.timeline || ''}
             />
           </div>
 
@@ -503,6 +520,7 @@ export default function TrafficStopSimulator() {
               className="w-full bg-slate-900 border-2 border-slate-700 rounded px-4 py-2 h-32"
               placeholder="Officer: 'Where are you headed?'&#10;Me: 'I am exercising my right to remain silent.'&#10;&#10;Officer: 'Mind if I search your vehicle?'&#10;Me: 'I do not consent to any searches.'"
               onChange={(e) => setDocData({...docData, dialogue: e.target.value})}
+              value={docData.dialogue || ''}
             />
           </div>
 
@@ -515,6 +533,7 @@ export default function TrafficStopSimulator() {
                   id="searched"
                   className="w-4 h-4"
                   onChange={(e) => setDocData({...docData, searched: e.target.checked})}
+                  checked={!!docData.searched}
                 />
                 <label htmlFor="searched" className="text-slate-300">Vehicle was searched</label>
               </div>
@@ -524,6 +543,7 @@ export default function TrafficStopSimulator() {
                   id="consented"
                   className="w-4 h-4"
                   onChange={(e) => setDocData({...docData, consented: e.target.checked})}
+                  checked={!!docData.consented}
                 />
                 <label htmlFor="consented" className="text-slate-300">I consented to search (if unchecked, search was without consent)</label>
               </div>
@@ -532,6 +552,7 @@ export default function TrafficStopSimulator() {
                 <textarea
                   className="w-full bg-slate-900 border-2 border-slate-700 rounded px-4 py-2 h-20"
                   onChange={(e) => setDocData({...docData, itemsRemoved: e.target.value})}
+                  value={docData.itemsRemoved || ''}
                 />
               </div>
               <div>
@@ -539,6 +560,7 @@ export default function TrafficStopSimulator() {
                 <textarea
                   className="w-full bg-slate-900 border-2 border-slate-700 rounded px-4 py-2 h-20"
                   onChange={(e) => setDocData({...docData, damage: e.target.value})}
+                  value={docData.damage || ''}
                 />
               </div>
               <div className="flex items-center gap-4">
@@ -547,6 +569,7 @@ export default function TrafficStopSimulator() {
                   id="k9"
                   className="w-4 h-4"
                   onChange={(e) => setDocData({...docData, k9: e.target.checked})}
+                  checked={!!docData.k9}
                 />
                 <label htmlFor="k9" className="text-slate-300">K-9 unit was called/used</label>
               </div>
@@ -559,6 +582,7 @@ export default function TrafficStopSimulator() {
               className="w-full bg-slate-900 border-2 border-slate-700 rounded px-4 py-2 h-20"
               placeholder="Passenger: Jane Doe, 555-1234&#10;Other vehicle at scene: White Toyota, plate ABC-123"
               onChange={(e) => setDocData({...docData, witnesses: e.target.value})}
+              value={docData.witnesses || ''}
             />
           </div>
 
@@ -568,6 +592,7 @@ export default function TrafficStopSimulator() {
               className="w-full bg-slate-900 border-2 border-slate-700 rounded px-4 py-2 h-32"
               placeholder="Weather conditions, lighting, officer demeanor, anything else relevant"
               onChange={(e) => setDocData({...docData, notes: e.target.value})}
+              value={docData.notes || ''}
             />
           </div>
 
@@ -635,6 +660,13 @@ ${docData.notes || '[None]'}`;
             className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg"
           >
             Download Documentation
+          </button>
+
+          <button
+            onClick={handleClearDocumentation}
+            className="w-full mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-lg"
+          >
+            Clear Form
           </button>
         </div>
       </div>
