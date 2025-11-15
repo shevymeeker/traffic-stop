@@ -1,6 +1,6 @@
 // src/PWUpdatePrompt.jsx
 import React from 'react';
-import { useRegisterSW } from 'vite-plugin-pwa/react';
+import { useRegisterSW } from 'virtual:pwa-register/react';
 
 function PWUpdatePrompt() {
   const {
