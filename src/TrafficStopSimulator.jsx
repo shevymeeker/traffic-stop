@@ -424,8 +424,8 @@ export default function TrafficStopSimulator() {
 
                 <ExpandableCard id="constitutional" title="Constitutional Framework" icon="🛡️" defaultOpen={true}>
                   <div className="space-y-4">
-                    <div className="bg-blue-900/20 rounded-lg p-4">
-                      <h4 className="font-bold text-blue-400 mb-2">Fourth Amendment Protection:</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2">Fourth Amendment Protection:</h4>
                       <ul className="text-slate-300 space-y-1 ml-4 text-sm">
                         <li>• Free from unreasonable searches</li>
                         <li>• Traffic stop = "seizure"</li>
@@ -433,22 +433,22 @@ export default function TrafficStopSimulator() {
                       </ul>
                     </div>
 
-                    <div className="bg-blue-900/20 rounded-lg p-4">
-                      <h4 className="font-bold text-blue-400 mb-2">Fifth Amendment Protection:</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2">Fifth Amendment Protection:</h4>
                       <ul className="text-slate-300 space-y-1 ml-4 text-sm">
                         <li>• Right to remain silent</li>
-                        <li>• DON'T answer beyond ID</li>
+                        <li>• <span className="text-red-400 font-bold">DON'T</span> answer beyond ID</li>
                         <li>• Silence ≠ probable cause</li>
                       </ul>
                     </div>
 
-                    <div className="bg-yellow-900/30 border-2 border-yellow-500 rounded-lg p-4">
-                      <h4 className="font-bold text-yellow-400 mb-2">📋 What You MUST Provide:</h4>
+                    <div className="bg-slate-900/50 border border-slate-600 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2">📋 What You MUST Provide:</h4>
                       <ol className="text-slate-300 space-y-1 text-sm">
                         <li>1. Driver's license</li>
                         <li>2. Vehicle registration</li>
                         <li>3. Proof of insurance</li>
-                        <li className="font-bold text-lg text-yellow-300 mt-2">THAT'S IT. FULL STOP.</li>
+                        <li className="font-bold text-slate-200 mt-2">THAT'S IT. FULL STOP.</li>
                       </ol>
                     </div>
                   </div>
@@ -456,55 +456,55 @@ export default function TrafficStopSimulator() {
 
                 <ExpandableCard id="caselaw" title="Case Law You Need to Know" icon="⚖️">
                   <div className="space-y-3">
-                    <div className="bg-red-900/30 border-l-4 border-red-500 rounded p-4">
-                      <h4 className="font-bold text-red-400 mb-2">🚗 Whren v. U.S. (1996) - THE TRAP</h4>
+                    <div className="bg-slate-900/50 border-l-4 border-slate-600 rounded p-4">
+                      <h4 className="font-bold text-slate-200 mb-2">🚗 Whren v. U.S. (1996) - THE TRAP</h4>
                       <p className="text-slate-300 text-sm mb-1"><strong>The Bad News:</strong> Pretextual stops are legal</p>
-                      <p className="text-slate-300 text-sm"><strong className="text-red-400">Defense:</strong> Assume EVERY stop is pretextual. Stick to the script.</p>
+                      <p className="text-slate-300 text-sm"><strong>Defense:</strong> Assume EVERY stop is pretextual. Stick to the script.</p>
                     </div>
 
-                    <div className="bg-blue-900/30 border-l-4 border-blue-500 rounded p-4">
-                      <h4 className="font-bold text-blue-400 mb-2">⏱️ Rodriguez v. U.S. (2015) - THE CLOCK</h4>
+                    <div className="bg-slate-900/50 border-l-4 border-slate-600 rounded p-4">
+                      <h4 className="font-bold text-slate-200 mb-2">⏱️ Rodriguez v. U.S. (2015) - THE CLOCK</h4>
                       <p className="text-slate-300 text-sm mb-1"><strong>The Rule:</strong> CANNOT extend stop beyond traffic mission time</p>
-                      <p className="text-slate-300 text-sm"><strong className="text-green-400">Your Move:</strong> After docs returned: "Am I free to go?"</p>
+                      <p className="text-slate-300 text-sm"><strong>Your Move:</strong> After docs returned: <span className="text-green-400">"Am I free to go?"</span></p>
                     </div>
 
-                    <div className="bg-slate-900 border-l-4 border-slate-600 rounded p-4">
-                      <h4 className="font-bold text-slate-300 mb-1 text-sm">🚫 The "Wall Stop" Scenario</h4>
+                    <div className="bg-slate-900/50 border-l-4 border-slate-600 rounded p-4">
+                      <h4 className="font-bold text-slate-200 mb-1 text-sm">🚫 The "Wall Stop" Scenario</h4>
                       <p className="text-slate-300 text-sm">Intel (DEA/FBI) can ID your car, BUT patrol needs <strong>INDEPENDENT</strong> probable cause</p>
                     </div>
 
-                    <div className="bg-slate-900 border-l-4 border-slate-600 rounded p-4">
-                      <h4 className="font-bold text-slate-300 mb-1 text-sm">Pennsylvania v. Mimms (1977)</h4>
-                      <p className="text-slate-300 text-sm">Officers can order you out during any stop. You must comply.</p>
+                    <div className="bg-slate-900/50 border-l-4 border-slate-600 rounded p-4">
+                      <h4 className="font-bold text-slate-200 mb-1 text-sm">Pennsylvania v. Mimms (1977)</h4>
+                      <p className="text-slate-300 text-sm">Officers can order you out during any stop. <span className="text-green-400 font-bold">You must comply.</span></p>
                     </div>
 
-                    <div className="bg-slate-900 border-l-4 border-slate-600 rounded p-4">
-                      <h4 className="font-bold text-slate-300 mb-1 text-sm">Riley v. California (2014)</h4>
-                      <p className="text-slate-300 text-sm">Police need a warrant to search your phone. Never unlock it.</p>
+                    <div className="bg-slate-900/50 border-l-4 border-slate-600 rounded p-4">
+                      <h4 className="font-bold text-slate-200 mb-1 text-sm">Riley v. California (2014)</h4>
+                      <p className="text-slate-300 text-sm">Police need a warrant to search your phone. <span className="text-red-400 font-bold">Never</span> unlock it.</p>
                     </div>
                   </div>
                 </ExpandableCard>
 
                 <ExpandableCard id="must-do" title="What You Must / Don't Have To Do" icon="✅">
                   <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-green-900/20 rounded-lg p-4">
-                      <h4 className="font-bold text-green-400 mb-3">What You MUST Do</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-3">What You Must Do</h4>
                       <ul className="space-y-2 text-slate-300 text-sm">
-                        <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" /> Pull over safely</li>
-                        <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" /> Show license, registration, insurance</li>
-                        <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" /> Exit vehicle if ordered (Mimms)</li>
-                        <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" /> Keep hands visible</li>
+                        <li className="flex gap-2"><span className="text-green-400 font-bold flex-shrink-0">ALWAYS:</span> Pull over safely</li>
+                        <li className="flex gap-2"><span className="text-green-400 font-bold flex-shrink-0">ALWAYS:</span> Show license, registration, insurance</li>
+                        <li className="flex gap-2"><span className="text-green-400 font-bold flex-shrink-0">ALWAYS:</span> Exit vehicle if ordered (Mimms)</li>
+                        <li className="flex gap-2"><span className="text-green-400 font-bold flex-shrink-0">ALWAYS:</span> Keep hands visible</li>
                       </ul>
                     </div>
 
-                    <div className="bg-red-900/20 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-3">What You DON'T Have To Do</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-3">What You Don't Have To Do</h4>
                       <ul className="space-y-2 text-slate-300 text-sm">
-                        <li className="flex gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> Answer destination questions</li>
-                        <li className="flex gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> Consent to searches</li>
-                        <li className="flex gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> Stay after stop is completed</li>
-                        <li className="flex gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> Unlock your phone (Riley)</li>
-                        <li className="flex gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> Explain yourself</li>
+                        <li className="flex gap-2"><span className="text-red-400 font-bold flex-shrink-0">DON'T:</span> Answer destination questions</li>
+                        <li className="flex gap-2"><span className="text-red-400 font-bold flex-shrink-0">DON'T:</span> Consent to searches</li>
+                        <li className="flex gap-2"><span className="text-red-400 font-bold flex-shrink-0">DON'T:</span> Stay after stop is completed</li>
+                        <li className="flex gap-2"><span className="text-red-400 font-bold flex-shrink-0">DON'T:</span> Unlock your phone (Riley)</li>
+                        <li className="flex gap-2"><span className="text-red-400 font-bold flex-shrink-0">DON'T:</span> Explain yourself</li>
                       </ul>
                     </div>
                   </div>
@@ -518,28 +518,28 @@ export default function TrafficStopSimulator() {
 
                 <ExpandableCard id="pre-stop" title="Pre-Stop 'Indicators' They Watch" icon="👁️" defaultOpen={true}>
                   <div className="space-y-3">
-                    <div className="bg-red-900/20 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-2 text-sm">👁️ "The Stare" Trap</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">👁️ "The Stare" Trap</h4>
                       <ul className="text-slate-300 space-y-1 ml-4 text-sm">
                         <li>• NOT looking = "studiously avoiding" (suspicious)</li>
                         <li>• LOOKING = "locked stare" (suspicious)</li>
-                        <li><strong className="text-cyan-400">Reality:</strong> Unfalsifiable. Drive normally.</li>
+                        <li><strong>Reality:</strong> Unfalsifiable. Drive normally.</li>
                       </ul>
                     </div>
 
-                    <div className="bg-red-900/20 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-2 text-sm">🪞 "Mirror Fixation" Trap</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">🪞 "Mirror Fixation" Trap</h4>
                       <p className="text-slate-300 mb-1 text-sm">Checking mirrors frequently = suspicious</p>
-                      <p className="text-cyan-400 text-sm"><strong>Reality:</strong> That's defensive driving.</p>
+                      <p className="text-slate-300 text-sm"><strong>Reality:</strong> That's defensive driving.</p>
                     </div>
 
-                    <div className="bg-red-900/20 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-2 text-sm">🚙 "Irrational Driving" Trap</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">🚙 "Irrational Driving" Trap</h4>
                       <ul className="text-slate-300 space-y-1 ml-4 text-sm">
                         <li>• Braking when you see police</li>
                         <li>• "Lane camping" (staying in lane)</li>
                         <li>• Driving exactly speed limit</li>
-                        <li><strong className="text-cyan-400">Reality:</strong> Legal, cautious behavior.</li>
+                        <li><strong>Reality:</strong> Legal, cautious behavior.</li>
                       </ul>
                     </div>
                   </div>
@@ -547,33 +547,33 @@ export default function TrafficStopSimulator() {
 
                 <ExpandableCard id="vehicle-forensics" title="Vehicle 'Forensics' They Run" icon="🔑">
                   <div className="space-y-3">
-                    <div className="bg-slate-900 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-2 text-sm">🔑 The Rental Game</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">🔑 The Rental Game</h4>
                       <p className="text-slate-300 mb-2 text-sm"><strong>RED FLAGS (to them):</strong></p>
                       <ul className="text-slate-300 space-y-1 ml-4 text-sm">
                         <li>• Third-party rental (not driver's name)</li>
                         <li>• One-way trip</li>
                         <li>• "Inefficient" routes</li>
                       </ul>
-                      <p className="text-cyan-400 mt-2 text-sm"><strong>Know This:</strong> Have docs ready.</p>
+                      <p className="text-slate-300 mt-2 text-sm"><strong>Know This:</strong> Have docs ready.</p>
                     </div>
 
-                    <div className="bg-slate-900 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-2 text-sm">🧼 "Clean/Dirty" Conflict</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">🧼 "Clean/Dirty" Conflict</h4>
                       <ul className="text-slate-300 space-y-1 ml-4 text-sm">
                         <li>• Dirty exterior + clean interior = suspicious</li>
                         <li>• Clean interior + dirty exterior = suspicious</li>
-                        <li><strong className="text-cyan-400">Reality:</strong> Confirmation bias.</li>
+                        <li><strong>Reality:</strong> Confirmation bias.</li>
                       </ul>
                     </div>
 
-                    <div className="bg-slate-900 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-2 text-sm">🔧 Hardware Red Flags</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">🔧 Hardware Red Flags</h4>
                       <ul className="text-slate-300 space-y-1 ml-4 text-sm">
                         <li>• New bolts on old plates (switched)</li>
                         <li>• Fresh welds on gas tank</li>
                         <li>• Aftermarket undercarriage mods</li>
-                        <li><strong className="text-red-400">CRITICAL:</strong> Don't consent to "look underneath"</li>
+                        <li><strong className="text-red-400">DON'T</strong> consent to "look underneath"</li>
                       </ul>
                     </div>
                   </div>
@@ -581,8 +581,8 @@ export default function TrafficStopSimulator() {
 
                 <ExpandableCard id="interview-trap" title="The Interview Trap" icon="🪝">
                   <div className="space-y-3">
-                    <div className="bg-red-900/40 border-2 border-red-500 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-2 text-sm">🎯 Their Goal:</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">🎯 Their Goal:</h4>
                       <ul className="text-slate-300 space-y-1 text-sm ml-4">
                         <li>• Normalize interaction → detect "deviations"</li>
                         <li>• Build rapport → volunteer info</li>
@@ -590,24 +590,23 @@ export default function TrafficStopSimulator() {
                       </ul>
                     </div>
 
-                    <div className="bg-slate-900 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-2 text-sm">🪝 "Hook" Questions</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">🪝 "Hook" Questions</h4>
                       <ul className="text-slate-300 space-y-1 ml-4 text-sm mb-2">
                         <li>• "Where coming from/going to?"</li>
                         <li>• "What's the purpose of your trip?"</li>
                         <li>• "Who knows you're traveling?"</li>
                       </ul>
-                      <div className="bg-green-900/40 border border-green-500 rounded p-3 mt-2">
-                        <p className="text-green-400 font-bold text-sm">YOUR RESPONSE:</p>
-                        <p className="text-slate-300 text-sm">"I'm not discussing my day. Am I free to go?"</p>
+                      <div className="bg-slate-900 border border-slate-600 rounded p-3 mt-2">
+                        <p className="text-slate-300 text-sm">Response: <span className="text-green-400 font-bold">"I'm not discussing my day. Am I free to go?"</span></p>
                       </div>
                     </div>
 
-                    <div className="bg-yellow-900/30 border-2 border-yellow-500 rounded-lg p-4">
-                      <h4 className="font-bold text-yellow-400 mb-2 text-sm">🚨 "Deception Cues" (Pseudoscience)</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">🚨 "Deception Cues" (Pseudoscience)</h4>
                       <p className="text-slate-300 text-sm mb-1"><strong>Verbal:</strong> "Swearing to God," over-explaining</p>
                       <p className="text-slate-300 text-sm mb-1"><strong>Body:</strong> Fidgeting, avoiding eye contact, yawning</p>
-                      <p className="text-red-400 text-sm"><strong>REALITY:</strong> Nervousness ≠ probable cause</p>
+                      <p className="text-slate-300 text-sm"><strong>REALITY:</strong> Nervousness ≠ probable cause</p>
                     </div>
                   </div>
                 </ExpandableCard>
@@ -631,17 +630,17 @@ export default function TrafficStopSimulator() {
 
                 <ExpandableCard id="search-pattern" title="The Search Pattern" icon="🔍" defaultOpen={true}>
                   <div className="space-y-3">
-                    <div className="bg-slate-900 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-2 text-sm">🔍 Systematic Search (Zone 1→8)</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">🔍 Systematic Search (Zone 1→8)</h4>
                       <p className="text-slate-300 text-sm mb-2">NOT random - methodical:</p>
                       <p className="text-slate-300 text-sm mb-2">Z1: Front seats • Z2-8: Console, doors, trunk, undercarriage, engine, tires, frame voids</p>
-                      <p className="text-cyan-400 text-sm"><strong>Why Know:</strong> If systematic, they're committed. DOCUMENT EVERYTHING.</p>
+                      <p className="text-slate-300 text-sm"><strong>Why Know:</strong> If systematic, they're committed. DOCUMENT EVERYTHING.</p>
                     </div>
 
-                    <div className="bg-red-900/40 border-2 border-red-500 rounded-lg p-4">
-                      <h4 className="font-bold text-red-300 mb-2 text-sm">🕳️ "Rule of Voids"</h4>
+                    <div className="bg-slate-900/50 border border-slate-600 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">🕳️ "Rule of Voids"</h4>
                       <p className="text-slate-300 mb-2 text-sm">Every car has hollow spaces (door panels, frame rails). They know them.</p>
-                      <p className="text-slate-100 font-bold text-sm">REQUIRES PROBABLE CAUSE.</p>
+                      <p className="text-slate-200 font-bold text-sm">REQUIRES PROBABLE CAUSE.</p>
                       <p className="text-slate-300 text-sm">Voids ≠ "plain view"</p>
                     </div>
                   </div>
@@ -649,44 +648,44 @@ export default function TrafficStopSimulator() {
 
                 <ExpandableCard id="where-look" title="Where They're Trained to Look" icon="🛞">
                   <div className="space-y-2">
-                    <div className="bg-slate-900 rounded-lg p-3">
-                      <p className="text-sm"><strong className="text-red-400">🛞 Tires:</strong> <span className="text-slate-300">Hit with mallet. "Thud"=solid (drugs), "Ring"=air (normal)</span></p>
+                    <div className="bg-slate-900/50 rounded-lg p-3">
+                      <p className="text-sm"><strong className="text-slate-200">🛞 Tires:</strong> <span className="text-slate-300">Hit with mallet. "Thud"=solid (drugs), "Ring"=air (normal)</span></p>
                     </div>
-                    <div className="bg-slate-900 rounded-lg p-3">
-                      <p className="text-sm"><strong className="text-red-400">🚗 Undercarriage:</strong> <span className="text-slate-300">Fresh welds/cuts on gas tank, disturbed undercoating</span></p>
+                    <div className="bg-slate-900/50 rounded-lg p-3">
+                      <p className="text-sm"><strong className="text-slate-200">🚗 Undercarriage:</strong> <span className="text-slate-300">Fresh welds/cuts on gas tank, disturbed undercoating</span></p>
                     </div>
-                    <div className="bg-slate-900 rounded-lg p-3">
-                      <p className="text-sm"><strong className="text-red-400">📻 Dash/Console:</strong> <span className="text-slate-300">Non-factory switches, loose screws, vents that don't blow</span></p>
+                    <div className="bg-slate-900/50 rounded-lg p-3">
+                      <p className="text-sm"><strong className="text-slate-200">📻 Dash/Console:</strong> <span className="text-slate-300">Non-factory switches, loose screws, vents that don't blow</span></p>
                     </div>
-                    <div className="bg-slate-900 rounded-lg p-3">
-                      <p className="text-sm"><strong className="text-red-400">🪤 Traps:</strong> <span className="text-slate-300">Complex sequences (Defrost+Neutral+Rear Switch = hidden compartment)</span></p>
+                    <div className="bg-slate-900/50 rounded-lg p-3">
+                      <p className="text-sm"><strong className="text-slate-200">🪤 Traps:</strong> <span className="text-slate-300">Complex sequences (Defrost+Neutral+Rear Switch = hidden compartment)</span></p>
                     </div>
                   </div>
 
-                  <div className="bg-red-900/40 border-2 border-red-500 rounded-lg p-4 mt-4">
-                    <p className="text-slate-100 font-bold mb-2 text-sm">⚠️ CRITICAL:</p>
+                  <div className="bg-slate-900/50 border border-slate-600 rounded-lg p-4 mt-4">
+                    <p className="text-slate-200 font-bold mb-2 text-sm">⚠️ CRITICAL:</p>
                     <p className="text-slate-300 text-sm">ALL require: CONSENT, PROBABLE CAUSE, or WARRANT. Plain view ≠ hidden compartments/voids/containers.</p>
                   </div>
                 </ExpandableCard>
 
                 <ExpandableCard id="safety-protocols" title="Safety Protocols & What to Expect" icon="🚪">
                   <div className="space-y-3">
-                    <div className="bg-slate-900 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-2 text-sm">🚪 "Passenger Side Approach"</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">🚪 "Passenger Side Approach"</h4>
                       <p className="text-slate-300 mb-2 text-sm">Approach from passenger side = avoid mirrors, surprise you, view console</p>
-                      <p className="text-cyan-400 text-sm"><strong>Know This:</strong> Tactical, not safety. Creates disorientation. Stay calm.</p>
+                      <p className="text-slate-300 text-sm"><strong>Know This:</strong> Tactical, not safety. Creates disorientation. Stay calm.</p>
                     </div>
 
-                    <div className="bg-slate-900 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-2 text-sm">🚛 Trunk Check</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">🚛 Trunk Check</h4>
                       <p className="text-slate-300 mb-2 text-sm">Push down on trunk (checking latch). If it pops = search.</p>
-                      <p className="text-cyan-400 text-sm"><strong>STATE CLEARLY:</strong> "I do not consent to searches."</p>
+                      <p className="text-slate-300 text-sm">State clearly: <span className="text-green-400 font-bold">"I do not consent to searches."</span></p>
                     </div>
 
-                    <div className="bg-slate-900 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-2 text-sm">☠️ Fentanyl/Xylazine Risk</h4>
-                      <p className="text-slate-300 mb-2 text-sm">NEVER field test powder (aerosol risk). Special protocols, PPE required</p>
-                      <p className="text-red-400 text-sm"><strong>Why Matters:</strong> If they're taking precautions, they're assuming guilt.</p>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-2 text-sm">☠️ Fentanyl/Xylazine Risk</h4>
+                      <p className="text-slate-300 mb-2 text-sm"><span className="text-red-400 font-bold">NEVER</span> field test powder (aerosol risk). Special protocols, PPE required</p>
+                      <p className="text-slate-300 text-sm"><strong>Why Matters:</strong> If they're taking precautions, they're assuming guilt.</p>
                     </div>
                   </div>
                 </ExpandableCard>
@@ -704,8 +703,8 @@ export default function TrafficStopSimulator() {
 
                 <ExpandableCard id="before-stop" title="Before the Stop" icon="📱" defaultOpen={true}>
                   <div className="space-y-3">
-                    <div className="bg-slate-900 rounded-lg p-4">
-                      <p className="font-bold text-red-400 mb-2 text-sm">Preparation:</p>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <p className="font-bold text-slate-200 mb-2 text-sm">Preparation:</p>
                       <ul className="ml-4 space-y-1 text-sm text-slate-300">
                         <li>• Dashcam (front + interior, audio ON)</li>
                         <li>• Phone ready to record</li>
@@ -713,11 +712,11 @@ export default function TrafficStopSimulator() {
                         <li>• GPS/directions visible</li>
                       </ul>
                     </div>
-                    <div className="bg-slate-900 rounded-lg p-4">
-                      <p className="font-bold text-red-400 mb-2 text-sm">Mental Prep:</p>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <p className="font-bold text-slate-200 mb-2 text-sm">Mental Prep:</p>
                       <ul className="ml-4 space-y-1 text-sm text-slate-300">
                         <li>• You WILL be nervous (normal)</li>
-                        <li>• You WILL want to explain (don't)</li>
+                        <li>• You WILL want to explain (<span className="text-red-400 font-bold">don't</span>)</li>
                         <li>• You WILL want to "cooperate" (trap)</li>
                       </ul>
                     </div>
@@ -725,50 +724,50 @@ export default function TrafficStopSimulator() {
                 </ExpandableCard>
 
                 <ExpandableCard id="during-stop" title="During the Stop" icon="🛑">
-                  <div className="bg-slate-900 rounded-lg p-4">
-                    <p className="font-bold text-red-400 mb-2 text-sm">The Stop:</p>
+                  <div className="bg-slate-900/50 rounded-lg p-4">
+                    <p className="font-bold text-slate-200 mb-2 text-sm">The Stop:</p>
                     <ol className="ml-4 space-y-1 text-sm list-decimal text-slate-300">
-                      <li>Pull over safely, promptly</li>
-                      <li>Engine OFF, lights ON, hands on wheel</li>
+                      <li><span className="text-green-400 font-bold">ALWAYS:</span> Pull over safely, promptly</li>
+                      <li><span className="text-green-400 font-bold">ALWAYS:</span> Engine OFF, lights ON, hands on wheel</li>
                       <li>Window down 2-3 inches ONLY</li>
-                      <li>DON'T reach until asked</li>
+                      <li><span className="text-red-400 font-bold">DON'T</span> reach until asked</li>
                     </ol>
                   </div>
                 </ExpandableCard>
 
                 <ExpandableCard id="the-script" title="The Script (MEMORIZE THIS)" icon="🗣️" defaultOpen={true}>
                   <div className="space-y-3">
-                    <div className="bg-slate-900 border-l-4 border-blue-500 rounded p-4">
-                      <p className="font-bold text-blue-400 mb-2 text-sm">Officer asks for documents:</p>
-                      <p className="text-green-400 text-sm">"Here is my license, registration, and insurance."</p>
+                    <div className="bg-slate-900/50 border-l-4 border-slate-600 rounded p-4">
+                      <p className="font-bold text-slate-200 mb-2 text-sm">Officer asks for documents:</p>
+                      <p className="text-slate-300 text-sm">"Here is my license, registration, and insurance."</p>
                     </div>
 
-                    <div className="bg-slate-900 border-l-4 border-blue-500 rounded p-4">
-                      <p className="font-bold text-blue-400 mb-2 text-sm">Officer: "Do you know why I stopped you?"</p>
-                      <p className="text-green-400 text-sm">"No, officer."</p>
-                      <p className="text-red-400 text-xs italic mt-1">(DO NOT SPECULATE. DO NOT ADMIT.)</p>
+                    <div className="bg-slate-900/50 border-l-4 border-slate-600 rounded p-4">
+                      <p className="font-bold text-slate-200 mb-2 text-sm">Officer: "Do you know why I stopped you?"</p>
+                      <p className="text-slate-300 text-sm">"No, officer."</p>
+                      <p className="text-slate-400 text-xs italic mt-1">(<span className="text-red-400 font-bold">DO NOT SPECULATE. DO NOT ADMIT.</span>)</p>
                     </div>
 
-                    <div className="bg-slate-900 border-l-4 border-blue-500 rounded p-4">
-                      <p className="font-bold text-blue-400 mb-2 text-sm">Officer: "Where are you coming from/going?"</p>
-                      <p className="text-green-400 text-sm">"I'm not answering questions. Am I free to go?"</p>
+                    <div className="bg-slate-900/50 border-l-4 border-slate-600 rounded p-4">
+                      <p className="font-bold text-slate-200 mb-2 text-sm">Officer: "Where are you coming from/going?"</p>
+                      <p className="text-slate-300 text-sm">"I'm not answering questions. <span className="text-green-400 font-bold">Am I free to go?</span>"</p>
                     </div>
 
-                    <div className="bg-slate-900 border-l-4 border-blue-500 rounded p-4">
-                      <p className="font-bold text-blue-400 mb-2 text-sm">Officer: "Can I search your car?"</p>
-                      <p className="text-green-400 text-sm">"I do not consent to any searches. Am I free to go?"</p>
+                    <div className="bg-slate-900/50 border-l-4 border-slate-600 rounded p-4">
+                      <p className="font-bold text-slate-200 mb-2 text-sm">Officer: "Can I search your car?"</p>
+                      <p className="text-slate-300 text-sm">"<span className="text-red-400 font-bold">I do not consent to any searches.</span> <span className="text-green-400 font-bold">Am I free to go?</span>"</p>
                     </div>
 
-                    <div className="bg-slate-900 border-l-4 border-blue-500 rounded p-4">
-                      <p className="font-bold text-blue-400 mb-2 text-sm">Officer: "Why not, if nothing to hide?"</p>
-                      <p className="text-green-400 text-sm">"I do not consent. I'm exercising my Fourth Amendment rights. Am I free to go?"</p>
+                    <div className="bg-slate-900/50 border-l-4 border-slate-600 rounded p-4">
+                      <p className="font-bold text-slate-200 mb-2 text-sm">Officer: "Why not, if nothing to hide?"</p>
+                      <p className="text-slate-300 text-sm">"<span className="text-red-400 font-bold">I do not consent.</span> I'm exercising my Fourth Amendment rights. <span className="text-green-400 font-bold">Am I free to go?</span>"</p>
                     </div>
 
-                    <div className="bg-red-900/40 border-2 border-red-500 rounded p-4">
-                      <p className="font-bold text-red-300 mb-2 text-sm">⏰ AFTER DOCUMENTS RETURNED:</p>
+                    <div className="bg-slate-900/50 border border-slate-600 rounded p-4">
+                      <p className="font-bold text-slate-200 mb-2 text-sm">⏰ AFTER DOCUMENTS RETURNED:</p>
                       <p className="text-green-400 font-bold text-lg">"Am I free to go?"</p>
-                      <p className="text-slate-300 text-xs italic">(Repeat until answered)</p>
-                      <p className="text-slate-300 mt-2 text-sm"><strong>If YES:</strong> Leave immediately.</p>
+                      <p className="text-slate-400 text-xs italic">(Repeat until answered)</p>
+                      <p className="text-slate-300 mt-2 text-sm"><strong>If YES:</strong> <span className="text-green-400 font-bold">Leave immediately.</span></p>
                       <p className="text-slate-300 text-sm"><strong>If NO:</strong> "Why am I being detained?"</p>
                     </div>
                   </div>
@@ -776,24 +775,24 @@ export default function TrafficStopSimulator() {
 
                 <ExpandableCard id="dos-donts" title="Do's and Don'ts" icon="✅">
                   <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-red-900/20 rounded-lg p-4">
-                      <h4 className="font-bold text-red-400 mb-3 text-sm">❌ WHAT NOT TO DO</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-3 text-sm">What Not To Do</h4>
                       <ul className="space-y-2 text-slate-300 text-sm">
-                        <li>• Answer questions beyond ID</li>
-                        <li>• Consent to searches</li>
-                        <li>• Exit vehicle unless ordered</li>
-                        <li>• Get argumentative</li>
-                        <li>• Lie (lying IS probable cause)</li>
-                        <li>• Physically resist</li>
+                        <li><span className="text-red-400 font-bold">DON'T:</span> Answer questions beyond ID</li>
+                        <li><span className="text-red-400 font-bold">DON'T:</span> Consent to searches</li>
+                        <li><span className="text-red-400 font-bold">DON'T:</span> Exit vehicle unless ordered</li>
+                        <li><span className="text-red-400 font-bold">DON'T:</span> Get argumentative</li>
+                        <li><span className="text-red-400 font-bold">NEVER:</span> Lie (lying IS probable cause)</li>
+                        <li><span className="text-red-400 font-bold">DON'T:</span> Physically resist</li>
                       </ul>
                     </div>
 
-                    <div className="bg-green-900/20 rounded-lg p-4">
-                      <h4 className="font-bold text-green-400 mb-3 text-sm">✅ WHAT TO DO</h4>
+                    <div className="bg-slate-900/50 rounded-lg p-4">
+                      <h4 className="font-bold text-slate-200 mb-3 text-sm">What To Do</h4>
                       <ul className="space-y-2 text-slate-300 text-sm">
-                        <li>• Stay calm, polite tone</li>
-                        <li>• Use the script</li>
-                        <li>• Record everything</li>
+                        <li><span className="text-green-400 font-bold">ALWAYS:</span> Stay calm, polite tone</li>
+                        <li><span className="text-green-400 font-bold">ALWAYS:</span> Use the script</li>
+                        <li><span className="text-green-400 font-bold">ALWAYS:</span> Record everything</li>
                         <li>• Document badge numbers, time</li>
                         <li>• Note everything searched</li>
                         <li>• Ask for supervisor if searched</li>
@@ -802,8 +801,8 @@ export default function TrafficStopSimulator() {
                   </div>
                 </ExpandableCard>
 
-                <div className="bg-gradient-to-r from-red-900/30 to-red-800/20 border-2 border-red-500 rounded-xl p-6">
-                  <h3 className="text-xl font-bold mb-4 text-center text-red-400">⚖️ THE CORE TRUTH</h3>
+                <div className="bg-slate-900/50 border border-slate-600 rounded-xl p-6">
+                  <h3 className="text-xl font-bold mb-4 text-center text-slate-200">⚖️ THE CORE TRUTH</h3>
                   <div className="space-y-3 text-center text-slate-200 text-sm">
                     <p className="font-bold">They are trained to work at the edge of your rights.</p>
                     <p className="font-bold">You must know exactly where that edge is.</p>
@@ -813,9 +812,9 @@ export default function TrafficStopSimulator() {
                       <p className="text-slate-300 text-sm">Your defense: Force them to articulate specific facts for each escalation.</p>
                     </div>
 
-                    <div className="bg-yellow-900/40 border-2 border-yellow-500 rounded-lg p-4 my-4">
-                      <p className="font-bold text-yellow-400 mb-2">You cannot talk your way out of a stop.</p>
-                      <p className="font-bold text-red-400">You can only invoke your rights and document violations.</p>
+                    <div className="bg-slate-900 rounded-lg p-4 my-4">
+                      <p className="font-bold text-slate-200 mb-2">You cannot talk your way out of a stop.</p>
+                      <p className="font-bold text-slate-200">You can only invoke your rights and document violations.</p>
                     </div>
 
                     <p className="font-bold text-lg uppercase mt-4">
