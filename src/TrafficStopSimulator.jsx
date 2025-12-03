@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { AlertCircle, CheckCircle, XCircle, BookOpen, Target, FileText, ChevronRight, Clock, Camera, Phone } from 'lucide-react';
+import { AlertCircle, CheckCircle, XCircle, BookOpen, Target, FileText, ChevronRight, ChevronDown, Clock, Camera, Phone, Volume2, Play } from 'lucide-react';
 
 export default function TrafficStopSimulator() {
   const [mode, setMode] = useState('home');
   const [scenarioStep, setScenarioStep] = useState(0);
   const [responses, setResponses] = useState([]);
   const [feedback, setFeedback] = useState(null);
+  const [learnTab, setLearnTab] = useState('lane1'); // lane1, lane2, lane3, script
+  const [expandedSections, setExpandedSections] = useState({});
   const [docData, setDocData] = useState(() => {
     // Load saved documentation from localStorage on mount
     const saved = localStorage.getItem('trafficStopDoc');
     return saved ? JSON.parse(saved) : {};
   });
+
+  const toggleSection = (sectionId) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }));
+  };
 
   // Save docData to localStorage whenever it changes
   useEffect(() => {
@@ -290,527 +299,548 @@ export default function TrafficStopSimulator() {
     </div>
   );
 
-  const renderLearn = () => (
-    <div className="min-h-screen bg-slate-900 text-slate-100 p-6">
-      <div className="max-w-6xl mx-auto">
-        <button
-          onClick={() => setMode('home')}
-          className="mb-6 text-blue-400 hover:text-blue-300"
-        >
-          ← Back to Home
-        </button>
+  const renderLearn = () => {
+    const ExpandableCard = ({ id, title, icon, children, defaultOpen = false }) => {
+      const isExpanded = expandedSections[id] ?? defaultOpen;
 
-        <h1 className="text-3xl font-bold mb-8 text-center">Legal Framework & Tactical Defense</h1>
-
-        <div className="space-y-8">
-          {/* LANE 1: KNOW YOUR RIGHTS */}
-          <div className="bg-blue-900/20 border-2 border-blue-500 rounded-lg p-6">
-            <h2 className="text-2xl font-bold mb-6 text-blue-400 flex items-center gap-3">
-              <span className="text-3xl">🛡️</span> LANE 1: KNOW YOUR RIGHTS
-            </h2>
-
-            {/* The Three Sentences */}
-            <div className="bg-slate-800 rounded-lg p-6 border-2 border-green-500 mb-6">
-              <h3 className="text-2xl font-bold mb-4 text-green-400">The Three Sentences</h3>
-              <p className="text-slate-300 mb-4">Memorize these. Use only these.</p>
-              {threeLines.map((line, i) => (
-                <div key={i} className="bg-slate-900 p-4 rounded mb-2 font-mono text-sm">
-                  {i + 1}. "{line}"
-                </div>
-              ))}
+      return (
+        <div className="bg-slate-800/50 rounded-xl border border-slate-700/50 overflow-hidden mb-4">
+          <button
+            onClick={() => toggleSection(id)}
+            className="w-full px-6 py-4 flex items-center justify-between hover:bg-slate-700/30 transition-colors"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">{icon}</span>
+              <h3 className="text-lg font-bold text-left">{title}</h3>
             </div>
+            <ChevronDown
+              className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+            />
+          </button>
 
-            {/* Constitutional Framework */}
-            <div className="bg-slate-800 rounded-lg p-6 mb-6">
-              <h3 className="text-xl font-bold mb-4 text-blue-400">Constitutional Framework</h3>
-
-              <div className="mb-4">
-                <h4 className="font-bold text-green-400 mb-2">🛡️ Fourth Amendment Protection:</h4>
-                <ul className="text-slate-300 space-y-1 ml-4">
-                  <li>• Free from unreasonable searches</li>
-                  <li>• Traffic stop = "seizure"</li>
-                  <li>• Need: Reasonable suspicion to stop, probable cause to search</li>
-                </ul>
-              </div>
-
-              <div className="mb-4">
-                <h4 className="font-bold text-green-400 mb-2">⚖️ Fifth Amendment Protection:</h4>
-                <ul className="text-slate-300 space-y-1 ml-4">
-                  <li>• Right to remain silent</li>
-                  <li>• DON'T answer beyond ID</li>
-                  <li>• Silence ≠ probable cause</li>
-                </ul>
-              </div>
-
-              <div className="bg-yellow-900/30 border-2 border-yellow-500 rounded p-4 mt-4">
-                <h4 className="font-bold text-yellow-400 mb-2">📋 What You MUST Provide:</h4>
-                <ol className="text-slate-300 space-y-1">
-                  <li>1. Driver's license</li>
-                  <li>2. Vehicle registration</li>
-                  <li>3. Proof of insurance</li>
-                  <li className="font-bold text-lg text-yellow-300 mt-2">THAT'S IT. FULL STOP.</li>
-                </ol>
-              </div>
+          {isExpanded && (
+            <div className="px-6 pb-6 pt-2 animate-in fade-in duration-300">
+              {children}
             </div>
+          )}
+        </div>
+      );
+    };
 
-            {/* Case Law You Need to Know */}
-            <div className="bg-slate-800 rounded-lg p-6 mb-6">
-              <h3 className="text-xl font-bold mb-4 text-blue-400">Case Law You Need to Know</h3>
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100 p-4 md:p-6">
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="mb-6 flex items-center justify-between">
+            <button
+              onClick={() => setMode('home')}
+              className="text-blue-400 hover:text-blue-300 flex items-center gap-2"
+            >
+              <ChevronRight className="w-5 h-5 rotate-180" />
+              <span>Back</span>
+            </button>
 
-              <div className="space-y-4">
-                <div className="bg-red-900/30 border-2 border-red-500 rounded p-4">
-                  <h4 className="font-bold text-red-400 mb-2">🚗 Whren v. U.S. (1996) - THE TRAP:</h4>
-                  <p className="text-slate-300 mb-2"><strong>The Bad News:</strong> Pretextual stops are legal (minor violations as excuse to investigate)</p>
-                  <p className="text-slate-300"><strong className="text-red-400">Defense:</strong> Assume EVERY stop is pretextual. Stick to the script.</p>
-                </div>
-
-                <div className="bg-blue-900/30 border-2 border-blue-500 rounded p-4">
-                  <h4 className="font-bold text-blue-400 mb-2">⏱️ Rodriguez v. U.S. (2015) - THE CLOCK:</h4>
-                  <p className="text-slate-300 mb-2"><strong>The Rule:</strong> CANNOT extend stop beyond traffic mission time</p>
-                  <p className="text-slate-300"><strong className="text-green-400">Your Move:</strong> After docs returned: "Am I free to go?"</p>
-                  <p className="text-slate-400 text-sm mt-1 italic">Dog sniff time = extended = illegal (unless independent suspicion)</p>
-                </div>
-
-                <div className="bg-slate-900 border-2 border-slate-600 rounded p-4">
-                  <h4 className="font-bold text-slate-300 mb-2">🚫 The "Wall Stop" Scenario:</h4>
-                  <p className="text-slate-300">Intel (DEA/FBI) can ID your car, BUT patrol needs <strong>INDEPENDENT</strong> probable cause</p>
-                  <p className="text-slate-400 text-sm italic">"Someone told me" ≠ probable cause</p>
-                </div>
-
-                <div className="bg-slate-900 rounded p-4">
-                  <h4 className="font-bold text-slate-300 mb-1">Pennsylvania v. Mimms (1977)</h4>
-                  <p className="text-slate-300">Officers can order you out of the car during any traffic stop. You must comply.</p>
-                </div>
-
-                <div className="bg-slate-900 rounded p-4">
-                  <h4 className="font-bold text-slate-300 mb-1">Riley v. California (2014)</h4>
-                  <p className="text-slate-300">Police need a warrant to search your phone. Do not unlock it.</p>
-                </div>
-              </div>
-
-              <div className="bg-red-900/40 border-2 border-red-500 rounded p-4 mt-4">
-                <p className="text-slate-200 font-bold">⚠️ CRITICAL:</p>
-                <p className="text-slate-300">These cases created loopholes officers exploit. Your defense = knowing the limits and asserting them CLEARLY.</p>
-              </div>
-            </div>
-
-            {/* What You Must/Don't Have To Do */}
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-slate-800 rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-4 text-green-400">What You Must Do</h3>
-                <ul className="space-y-2 text-slate-300">
-                  <li className="flex gap-2"><CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" /> Pull over safely</li>
-                  <li className="flex gap-2"><CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" /> Show license, registration, insurance</li>
-                  <li className="flex gap-2"><CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" /> Exit vehicle if ordered (Mimms)</li>
-                  <li className="flex gap-2"><CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" /> Keep hands visible</li>
-                </ul>
-              </div>
-
-              <div className="bg-slate-800 rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-4 text-red-400">What You Don't Have To Do</h3>
-                <ul className="space-y-2 text-slate-300">
-                  <li className="flex gap-2"><XCircle className="w-5 h-5 text-red-400 flex-shrink-0" /> Answer destination/origin questions</li>
-                  <li className="flex gap-2"><XCircle className="w-5 h-5 text-red-400 flex-shrink-0" /> Consent to searches</li>
-                  <li className="flex gap-2"><XCircle className="w-5 h-5 text-red-400 flex-shrink-0" /> Stay after stop is completed</li>
-                  <li className="flex gap-2"><XCircle className="w-5 h-5 text-red-400 flex-shrink-0" /> Unlock your phone (Riley)</li>
-                  <li className="flex gap-2"><XCircle className="w-5 h-5 text-red-400 flex-shrink-0" /> Explain yourself</li>
-                </ul>
-              </div>
+            <div className="text-sm text-slate-400">
+              Tap sections to expand
             </div>
           </div>
 
-          {/* LANE 2: RECOGNIZE THE HUNT */}
-          <div className="bg-cyan-900/20 border-2 border-cyan-500 rounded-lg p-6">
-            <h2 className="text-2xl font-bold mb-6 text-cyan-400 flex items-center gap-3">
-              <span className="text-3xl">👁️</span> LANE 2: RECOGNIZE THE HUNT
-            </h2>
+          <h1 className="text-2xl md:text-4xl font-bold mb-6 text-center bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            Your Rights Masterclass
+          </h1>
 
-            {/* Pre-Stop Indicators */}
-            <div className="bg-slate-800 rounded-lg p-6 mb-6">
-              <h3 className="text-xl font-bold mb-4 text-cyan-400">Pre-Stop "Indicators" They Watch</h3>
+          {/* Tab Navigation */}
+          <div className="flex overflow-x-auto gap-2 mb-6 pb-2">
+            <button
+              onClick={() => setLearnTab('lane1')}
+              className={`px-4 md:px-6 py-3 rounded-xl font-medium transition-all whitespace-nowrap flex items-center gap-2 ${
+                learnTab === 'lane1'
+                  ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
+                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+              }`}
+            >
+              <span>🛡️</span>
+              <span className="hidden sm:inline">Know Your Rights</span>
+              <span className="sm:hidden">Rights</span>
+            </button>
 
-              <div className="space-y-4">
-                <div className="bg-slate-900 rounded p-4">
-                  <h4 className="font-bold text-red-400 mb-2">👁️ "The Stare" Trap:</h4>
-                  <ul className="text-slate-300 space-y-1 ml-4">
-                    <li>• NOT looking = "studiously avoiding" (suspicious)</li>
-                    <li>• LOOKING = "locked stare" (suspicious)</li>
-                    <li><strong className="text-cyan-400">Reality:</strong> Unfalsifiable. Drive normally.</li>
-                  </ul>
-                </div>
+            <button
+              onClick={() => setLearnTab('lane2')}
+              className={`px-4 md:px-6 py-3 rounded-xl font-medium transition-all whitespace-nowrap flex items-center gap-2 ${
+                learnTab === 'lane2'
+                  ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
+                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+              }`}
+            >
+              <span>👁️</span>
+              <span className="hidden sm:inline">Recognize The Hunt</span>
+              <span className="sm:hidden">Hunt</span>
+            </button>
 
-                <div className="bg-slate-900 rounded p-4">
-                  <h4 className="font-bold text-red-400 mb-2">🪞 "Mirror Fixation" Trap:</h4>
-                  <p className="text-slate-300 mb-1">Checking mirrors frequently = suspicious</p>
-                  <p className="text-cyan-400"><strong>Reality:</strong> That's defensive driving.</p>
-                </div>
+            <button
+              onClick={() => setLearnTab('lane3')}
+              className={`px-4 md:px-6 py-3 rounded-xl font-medium transition-all whitespace-nowrap flex items-center gap-2 ${
+                learnTab === 'lane3'
+                  ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
+                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+              }`}
+            >
+              <span>⚠️</span>
+              <span className="hidden sm:inline">Search & Defense</span>
+              <span className="sm:hidden">Search</span>
+            </button>
 
-                <div className="bg-slate-900 rounded p-4">
-                  <h4 className="font-bold text-red-400 mb-2">🚙 "Irrational Driving" Trap:</h4>
-                  <ul className="text-slate-300 space-y-1 ml-4">
-                    <li>• Braking when you see police</li>
-                    <li>• "Lane camping" (staying in lane)</li>
-                    <li>• Driving exactly speed limit</li>
-                    <li><strong className="text-cyan-400">Reality:</strong> Legal, cautious behavior.</li>
-                  </ul>
-                </div>
-
-                <div className="bg-yellow-900/30 border-2 border-yellow-500 rounded p-3">
-                  <p className="text-slate-300 italic text-sm">They look for ANY deviation from imaginary "normal" to justify the stop.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Vehicle Forensics */}
-            <div className="bg-slate-800 rounded-lg p-6 mb-6">
-              <h3 className="text-xl font-bold mb-4 text-cyan-400">Vehicle "Forensics" They Run</h3>
-
-              <div className="space-y-4">
-                <div className="bg-slate-900 rounded p-4">
-                  <h4 className="font-bold text-red-400 mb-2">🔑 The Rental Game:</h4>
-                  <p className="text-slate-300 mb-2"><strong>RED FLAGS (to them):</strong></p>
-                  <ul className="text-slate-300 space-y-1 ml-4">
-                    <li>• Third-party rental (not driver's name)</li>
-                    <li>• One-way trip</li>
-                    <li>• "Inefficient" routes</li>
-                  </ul>
-                  <p className="text-cyan-400 mt-2"><strong>Know This:</strong> Have docs ready. Rental agreements often prohibit 3rd-party use.</p>
-                </div>
-
-                <div className="bg-slate-900 rounded p-4">
-                  <h4 className="font-bold text-red-400 mb-2">🧼 "Clean/Dirty" Conflict:</h4>
-                  <ul className="text-slate-300 space-y-1 ml-4">
-                    <li>• Dirty exterior + clean interior = suspicious</li>
-                    <li>• Clean interior + dirty exterior = suspicious</li>
-                    <li><strong className="text-cyan-400">Reality:</strong> Confirmation bias. They'll find "suspicious" either way.</li>
-                  </ul>
-                </div>
-
-                <div className="bg-slate-900 rounded p-4">
-                  <h4 className="font-bold text-red-400 mb-2">🔧 Hardware Red Flags:</h4>
-                  <ul className="text-slate-300 space-y-1 ml-4">
-                    <li>• New bolts on old plates (switched)</li>
-                    <li>• Fresh welds on gas tank</li>
-                    <li>• Aftermarket undercarriage mods</li>
-                    <li><strong className="text-red-400">CRITICAL:</strong> Don't consent to "look underneath"</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* The Interview Trap */}
-            <div className="bg-slate-800 rounded-lg p-6 mb-6">
-              <h3 className="text-xl font-bold mb-4 text-cyan-400">The Interview Trap</h3>
-
-              <div className="bg-red-900/40 border-2 border-red-500 rounded p-4 mb-4">
-                <h4 className="font-bold text-red-400 mb-2">🎯 Their Goal:</h4>
-                <ul className="text-slate-300 space-y-1 text-sm">
-                  <li>• Normalize interaction → detect "deviations"</li>
-                  <li>• Build rapport → volunteer info</li>
-                  <li>• Separate driver/passenger → find conflicts</li>
-                </ul>
-              </div>
-
-              <div className="bg-slate-900 rounded p-4 mb-4">
-                <h4 className="font-bold text-red-400 mb-2">🪝 "Hook" Questions They Ask:</h4>
-                <ul className="text-slate-300 space-y-1 ml-4 mb-2">
-                  <li>• "Where coming from/going to?"</li>
-                  <li>• "What's the purpose of your trip?"</li>
-                  <li>• "Who knows you're traveling?"</li>
-                </ul>
-                <div className="bg-green-900/40 border border-green-500 rounded p-2 mt-2">
-                  <p className="text-green-400 font-bold">YOUR RESPONSE:</p>
-                  <p className="text-slate-300">"I'm not discussing my day. Am I free to go?"</p>
-                </div>
-              </div>
-
-              <div className="bg-slate-900 rounded p-4 mb-4">
-                <h4 className="font-bold text-red-400 mb-2">👥 Separation Technique:</h4>
-                <p className="text-slate-300 mb-2">They'll separate you to find conflicting stories. You DON'T have to answer.</p>
-                <p className="text-green-400 font-bold">"I'm not answering questions"</p>
-              </div>
-
-              <div className="bg-yellow-900/30 border-2 border-yellow-500 rounded p-4">
-                <h4 className="font-bold text-yellow-400 mb-2">🚨 "Deception Cues" (Pseudoscience):</h4>
-                <p className="text-slate-300 mb-2"><strong>Verbal:</strong> "Swearing to God," answering with questions, over-explaining</p>
-                <p className="text-slate-300 mb-2"><strong>Body:</strong> Carotid pulsing, "felony stretch" (yawning), fidgeting, avoiding eye contact</p>
-                <p className="text-red-400"><strong>REALITY:</strong> Nervousness ≠ probable cause</p>
-              </div>
-            </div>
-
-            {/* The Interdiction Playbook */}
-            <div className="bg-slate-800 rounded-lg p-6">
-              <h3 className="text-xl font-bold mb-4 text-cyan-400">The Interdiction Playbook</h3>
-              <p className="text-slate-300 mb-4">What they're trained to do:</p>
-              <ol className="space-y-2 text-slate-300 list-decimal list-inside">
-                <li><strong>Target Selection:</strong> Profile-based indicators before any violation</li>
-                <li><strong>Pretext Stop:</strong> Follow until minor violation occurs (Whren)</li>
-                <li><strong>"Consensual" Interview:</strong> Systematic interrogation about travel, work</li>
-                <li><strong>Manufacturing Suspicion:</strong> Stack indicators (nervousness, air fresheners, "inconsistencies")</li>
-                <li><strong>K-9 Gambit:</strong> Use stacked indicators to justify dog, then search</li>
-              </ol>
-            </div>
+            <button
+              onClick={() => setLearnTab('script')}
+              className={`px-4 md:px-6 py-3 rounded-xl font-medium transition-all whitespace-nowrap flex items-center gap-2 ${
+                learnTab === 'script'
+                  ? 'bg-green-500 text-white shadow-lg shadow-green-500/30'
+                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+              }`}
+            >
+              <span>🗣️</span>
+              <span className="hidden sm:inline">The Script</span>
+              <span className="sm:hidden">Script</span>
+            </button>
           </div>
 
-          {/* LANE 3: THE SEARCH & YOUR DEFENSE */}
-          <div className="bg-red-900/20 border-2 border-red-500 rounded-lg p-6">
-            <h2 className="text-2xl font-bold mb-6 text-red-400 flex items-center gap-3">
-              <span className="text-3xl">⚠️</span> LANE 3: THE SEARCH & YOUR DEFENSE
-            </h2>
+          {/* Tab Content */}
+          <div className="space-y-4">
+            {/* LANE 1: KNOW YOUR RIGHTS */}
+            {/* LANE 1: KNOW YOUR RIGHTS */}
+            {learnTab === 'lane1' && (
+              <div className="space-y-4 animate-in fade-in duration-500">
 
-            {/* Search Pattern */}
-            <div className="bg-slate-800 rounded-lg p-6 mb-6">
-              <h3 className="text-xl font-bold mb-4 text-red-400">The Search Pattern</h3>
-
-              <div className="bg-slate-900 rounded p-4 mb-4">
-                <h4 className="font-bold text-red-400 mb-2">🔍 Systematic Search (Zone 1→8):</h4>
-                <p className="text-slate-300 mb-2">NOT random - methodical:</p>
-                <p className="text-slate-300 mb-2">Z1: Front seats • Z2-8: Console, doors, trunk, undercarriage, engine, tires, frame voids</p>
-                <p className="text-cyan-400"><strong>Why Know:</strong> If systematic, they're committed. DOCUMENT EVERYTHING.</p>
-              </div>
-
-              <div className="bg-red-900/40 border-2 border-red-500 rounded p-4">
-                <h4 className="font-bold text-red-300 mb-2">🕳️ "Rule of Voids":</h4>
-                <p className="text-slate-300 mb-2">Every car has hollow spaces (door panels, frame rails). They know them.</p>
-                <p className="text-slate-100 font-bold">REQUIRES PROBABLE CAUSE.</p>
-                <p className="text-slate-300 text-sm">Voids ≠ "plain view"</p>
-              </div>
-            </div>
-
-            {/* Where They Look */}
-            <div className="bg-slate-800 rounded-lg p-6 mb-6">
-              <h3 className="text-xl font-bold mb-4 text-red-400">Where They're Trained to Look</h3>
-
-              <div className="space-y-3 text-slate-300">
-                <div className="bg-slate-900 rounded p-3">
-                  <p><strong className="text-red-400">🛞 Tires:</strong> Hit with mallet. "Thud"=solid (drugs), "Ring"=air (normal)</p>
-                </div>
-                <div className="bg-slate-900 rounded p-3">
-                  <p><strong className="text-red-400">🚗 Undercarriage:</strong> Fresh welds/cuts on gas tank, disturbed undercoating</p>
-                </div>
-                <div className="bg-slate-900 rounded p-3">
-                  <p><strong className="text-red-400">📻 Dash/Console:</strong> Non-factory switches, loose screws, vents that don't blow</p>
-                </div>
-                <div className="bg-slate-900 rounded p-3">
-                  <p><strong className="text-red-400">🪤 Traps:</strong> Complex sequences (Defrost+Neutral+Rear Switch = hidden compartment)</p>
-                </div>
-              </div>
-
-              <div className="bg-red-900/40 border-2 border-red-500 rounded p-4 mt-4">
-                <p className="text-slate-100 font-bold mb-2">⚠️ CRITICAL:</p>
-                <p className="text-slate-300">ALL require: CONSENT, PROBABLE CAUSE, or WARRANT. Plain view ≠ hidden compartments/voids/containers.</p>
-              </div>
-            </div>
-
-            {/* Safety Protocols & What to Expect */}
-            <div className="bg-slate-800 rounded-lg p-6">
-              <h3 className="text-xl font-bold mb-4 text-red-400">Safety Protocols & What to Expect</h3>
-
-              <div className="space-y-4">
-                <div className="bg-slate-900 rounded p-4">
-                  <h4 className="font-bold text-red-400 mb-2">🚪 "Passenger Side Approach":</h4>
-                  <p className="text-slate-300 mb-2">Approach from passenger side = avoid mirrors, surprise you, view console</p>
-                  <p className="text-cyan-400"><strong>Know This:</strong> Tactical, not safety. Creates disorientation. Stay calm.</p>
+                {/* The Three Sentences - Always Visible */}
+                <div className="bg-gradient-to-br from-green-500/10 to-emerald-600/5 rounded-xl border-2 border-green-500/30 p-6">
+                  <h3 className="text-2xl font-bold mb-4 text-green-400">🎯 The Three Sentences</h3>
+                  <p className="text-slate-300 mb-4">Memorize these. Use only these.</p>
+                  {threeLines.map((line, i) => (
+                    <div key={i} className="bg-slate-900 p-4 rounded-lg mb-2 font-mono text-sm border-l-4 border-green-500">
+                      {i + 1}. "{line}"
+                    </div>
+                  ))}
                 </div>
 
-                <div className="bg-slate-900 rounded p-4">
-                  <h4 className="font-bold text-red-400 mb-2">🚛 Trunk Check:</h4>
-                  <p className="text-slate-300 mb-2">Push down on trunk (checking latch). If it pops = search.</p>
-                  <p className="text-cyan-400"><strong>STATE CLEARLY:</strong> "I do not consent to searches."</p>
-                </div>
+                <ExpandableCard id="constitutional" title="Constitutional Framework" icon="🛡️" defaultOpen={true}>
+                  <div className="space-y-4">
+                    <div className="bg-blue-900/20 rounded-lg p-4">
+                      <h4 className="font-bold text-blue-400 mb-2">Fourth Amendment Protection:</h4>
+                      <ul className="text-slate-300 space-y-1 ml-4 text-sm">
+                        <li>• Free from unreasonable searches</li>
+                        <li>• Traffic stop = "seizure"</li>
+                        <li>• Need: Reasonable suspicion to stop, probable cause to search</li>
+                      </ul>
+                    </div>
 
-                <div className="bg-slate-900 rounded p-4">
-                  <h4 className="font-bold text-red-400 mb-2">☠️ Fentanyl/Xylazine Risk:</h4>
-                  <p className="text-slate-300 mb-2">NEVER field test powder (aerosol risk). Special protocols, PPE required</p>
-                  <p className="text-red-400"><strong>Why Matters:</strong> If they're taking precautions, they're assuming guilt.</p>
-                </div>
+                    <div className="bg-blue-900/20 rounded-lg p-4">
+                      <h4 className="font-bold text-blue-400 mb-2">Fifth Amendment Protection:</h4>
+                      <ul className="text-slate-300 space-y-1 ml-4 text-sm">
+                        <li>• Right to remain silent</li>
+                        <li>• DON'T answer beyond ID</li>
+                        <li>• Silence ≠ probable cause</li>
+                      </ul>
+                    </div>
 
-                <div className="bg-yellow-900/30 border-2 border-yellow-500 rounded p-4">
-                  <h4 className="font-bold text-yellow-400 mb-2">📋 "Totality of Circumstances":</h4>
-                  <p className="text-slate-300 mb-2">They bundle indicators together. Pile of non-criminal behaviors ≠ crime.</p>
-                  <p className="text-red-400"><strong>Your Defense:</strong> Each must be valid.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* THE SCRIPT - Operational Protocol */}
-          <div className="bg-green-900/20 border-2 border-green-500 rounded-lg p-6">
-            <h2 className="text-2xl font-bold mb-6 text-green-400 text-center">
-              YOUR OPERATIONAL PROTOCOL: THE SCRIPT
-            </h2>
-
-            {/* Before & During the Stop */}
-            <div className="grid md:grid-cols-2 gap-4 mb-6">
-              <div className="bg-slate-800 rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-4 text-cyan-400">📱 BEFORE THE STOP</h3>
-                <div className="space-y-3 text-slate-300">
-                  <div>
-                    <p className="font-bold text-red-400">Preparation:</p>
-                    <ul className="ml-4 space-y-1 text-sm">
-                      <li>• Dashcam (front + interior, audio ON)</li>
-                      <li>• Phone ready to record</li>
-                      <li>• Docs in one place (NOT glove box)</li>
-                      <li>• GPS/directions visible</li>
-                    </ul>
+                    <div className="bg-yellow-900/30 border-2 border-yellow-500 rounded-lg p-4">
+                      <h4 className="font-bold text-yellow-400 mb-2">📋 What You MUST Provide:</h4>
+                      <ol className="text-slate-300 space-y-1 text-sm">
+                        <li>1. Driver's license</li>
+                        <li>2. Vehicle registration</li>
+                        <li>3. Proof of insurance</li>
+                        <li className="font-bold text-lg text-yellow-300 mt-2">THAT'S IT. FULL STOP.</li>
+                      </ol>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-bold text-red-400">Mental Prep:</p>
-                    <ul className="ml-4 space-y-1 text-sm">
-                      <li>• You WILL be nervous (normal)</li>
-                      <li>• You WILL want to explain (don't)</li>
-                      <li>• You WILL want to "cooperate" (trap)</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+                </ExpandableCard>
 
-              <div className="bg-slate-800 rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-4 text-yellow-400">🛑 DURING THE STOP</h3>
-                <div className="space-y-2 text-slate-300">
-                  <p className="font-bold text-red-400">The Stop:</p>
-                  <ol className="ml-4 space-y-1 text-sm list-decimal">
-                    <li>Pull over safely, promptly</li>
-                    <li>Engine OFF, lights ON, hands on wheel</li>
-                    <li>Window down 2-3 inches ONLY</li>
-                    <li>DON'T reach until asked</li>
+                <ExpandableCard id="caselaw" title="Case Law You Need to Know" icon="⚖️">
+                  <div className="space-y-3">
+                    <div className="bg-red-900/30 border-l-4 border-red-500 rounded p-4">
+                      <h4 className="font-bold text-red-400 mb-2">🚗 Whren v. U.S. (1996) - THE TRAP</h4>
+                      <p className="text-slate-300 text-sm mb-1"><strong>The Bad News:</strong> Pretextual stops are legal</p>
+                      <p className="text-slate-300 text-sm"><strong className="text-red-400">Defense:</strong> Assume EVERY stop is pretextual. Stick to the script.</p>
+                    </div>
+
+                    <div className="bg-blue-900/30 border-l-4 border-blue-500 rounded p-4">
+                      <h4 className="font-bold text-blue-400 mb-2">⏱️ Rodriguez v. U.S. (2015) - THE CLOCK</h4>
+                      <p className="text-slate-300 text-sm mb-1"><strong>The Rule:</strong> CANNOT extend stop beyond traffic mission time</p>
+                      <p className="text-slate-300 text-sm"><strong className="text-green-400">Your Move:</strong> After docs returned: "Am I free to go?"</p>
+                    </div>
+
+                    <div className="bg-slate-900 border-l-4 border-slate-600 rounded p-4">
+                      <h4 className="font-bold text-slate-300 mb-1 text-sm">🚫 The "Wall Stop" Scenario</h4>
+                      <p className="text-slate-300 text-sm">Intel (DEA/FBI) can ID your car, BUT patrol needs <strong>INDEPENDENT</strong> probable cause</p>
+                    </div>
+
+                    <div className="bg-slate-900 border-l-4 border-slate-600 rounded p-4">
+                      <h4 className="font-bold text-slate-300 mb-1 text-sm">Pennsylvania v. Mimms (1977)</h4>
+                      <p className="text-slate-300 text-sm">Officers can order you out during any stop. You must comply.</p>
+                    </div>
+
+                    <div className="bg-slate-900 border-l-4 border-slate-600 rounded p-4">
+                      <h4 className="font-bold text-slate-300 mb-1 text-sm">Riley v. California (2014)</h4>
+                      <p className="text-slate-300 text-sm">Police need a warrant to search your phone. Never unlock it.</p>
+                    </div>
+                  </div>
+                </ExpandableCard>
+
+                <ExpandableCard id="must-do" title="What You Must / Don't Have To Do" icon="✅">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="bg-green-900/20 rounded-lg p-4">
+                      <h4 className="font-bold text-green-400 mb-3">What You MUST Do</h4>
+                      <ul className="space-y-2 text-slate-300 text-sm">
+                        <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" /> Pull over safely</li>
+                        <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" /> Show license, registration, insurance</li>
+                        <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" /> Exit vehicle if ordered (Mimms)</li>
+                        <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" /> Keep hands visible</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-red-900/20 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-3">What You DON'T Have To Do</h4>
+                      <ul className="space-y-2 text-slate-300 text-sm">
+                        <li className="flex gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> Answer destination questions</li>
+                        <li className="flex gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> Consent to searches</li>
+                        <li className="flex gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> Stay after stop is completed</li>
+                        <li className="flex gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> Unlock your phone (Riley)</li>
+                        <li className="flex gap-2"><XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" /> Explain yourself</li>
+                      </ul>
+                    </div>
+                  </div>
+                </ExpandableCard>
+              </div>
+            )}
+
+            {/* LANE 2: RECOGNIZE THE HUNT */}
+            {learnTab === 'lane2' && (
+              <div className="space-y-4 animate-in fade-in duration-500">
+
+                <ExpandableCard id="pre-stop" title="Pre-Stop 'Indicators' They Watch" icon="👁️" defaultOpen={true}>
+                  <div className="space-y-3">
+                    <div className="bg-red-900/20 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-2 text-sm">👁️ "The Stare" Trap</h4>
+                      <ul className="text-slate-300 space-y-1 ml-4 text-sm">
+                        <li>• NOT looking = "studiously avoiding" (suspicious)</li>
+                        <li>• LOOKING = "locked stare" (suspicious)</li>
+                        <li><strong className="text-cyan-400">Reality:</strong> Unfalsifiable. Drive normally.</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-red-900/20 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-2 text-sm">🪞 "Mirror Fixation" Trap</h4>
+                      <p className="text-slate-300 mb-1 text-sm">Checking mirrors frequently = suspicious</p>
+                      <p className="text-cyan-400 text-sm"><strong>Reality:</strong> That's defensive driving.</p>
+                    </div>
+
+                    <div className="bg-red-900/20 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-2 text-sm">🚙 "Irrational Driving" Trap</h4>
+                      <ul className="text-slate-300 space-y-1 ml-4 text-sm">
+                        <li>• Braking when you see police</li>
+                        <li>• "Lane camping" (staying in lane)</li>
+                        <li>• Driving exactly speed limit</li>
+                        <li><strong className="text-cyan-400">Reality:</strong> Legal, cautious behavior.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </ExpandableCard>
+
+                <ExpandableCard id="vehicle-forensics" title="Vehicle 'Forensics' They Run" icon="🔑">
+                  <div className="space-y-3">
+                    <div className="bg-slate-900 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-2 text-sm">🔑 The Rental Game</h4>
+                      <p className="text-slate-300 mb-2 text-sm"><strong>RED FLAGS (to them):</strong></p>
+                      <ul className="text-slate-300 space-y-1 ml-4 text-sm">
+                        <li>• Third-party rental (not driver's name)</li>
+                        <li>• One-way trip</li>
+                        <li>• "Inefficient" routes</li>
+                      </ul>
+                      <p className="text-cyan-400 mt-2 text-sm"><strong>Know This:</strong> Have docs ready.</p>
+                    </div>
+
+                    <div className="bg-slate-900 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-2 text-sm">🧼 "Clean/Dirty" Conflict</h4>
+                      <ul className="text-slate-300 space-y-1 ml-4 text-sm">
+                        <li>• Dirty exterior + clean interior = suspicious</li>
+                        <li>• Clean interior + dirty exterior = suspicious</li>
+                        <li><strong className="text-cyan-400">Reality:</strong> Confirmation bias.</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-slate-900 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-2 text-sm">🔧 Hardware Red Flags</h4>
+                      <ul className="text-slate-300 space-y-1 ml-4 text-sm">
+                        <li>• New bolts on old plates (switched)</li>
+                        <li>• Fresh welds on gas tank</li>
+                        <li>• Aftermarket undercarriage mods</li>
+                        <li><strong className="text-red-400">CRITICAL:</strong> Don't consent to "look underneath"</li>
+                      </ul>
+                    </div>
+                  </div>
+                </ExpandableCard>
+
+                <ExpandableCard id="interview-trap" title="The Interview Trap" icon="🪝">
+                  <div className="space-y-3">
+                    <div className="bg-red-900/40 border-2 border-red-500 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-2 text-sm">🎯 Their Goal:</h4>
+                      <ul className="text-slate-300 space-y-1 text-sm ml-4">
+                        <li>• Normalize interaction → detect "deviations"</li>
+                        <li>• Build rapport → volunteer info</li>
+                        <li>• Separate driver/passenger → find conflicts</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-slate-900 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-2 text-sm">🪝 "Hook" Questions</h4>
+                      <ul className="text-slate-300 space-y-1 ml-4 text-sm mb-2">
+                        <li>• "Where coming from/going to?"</li>
+                        <li>• "What's the purpose of your trip?"</li>
+                        <li>• "Who knows you're traveling?"</li>
+                      </ul>
+                      <div className="bg-green-900/40 border border-green-500 rounded p-3 mt-2">
+                        <p className="text-green-400 font-bold text-sm">YOUR RESPONSE:</p>
+                        <p className="text-slate-300 text-sm">"I'm not discussing my day. Am I free to go?"</p>
+                      </div>
+                    </div>
+
+                    <div className="bg-yellow-900/30 border-2 border-yellow-500 rounded-lg p-4">
+                      <h4 className="font-bold text-yellow-400 mb-2 text-sm">🚨 "Deception Cues" (Pseudoscience)</h4>
+                      <p className="text-slate-300 text-sm mb-1"><strong>Verbal:</strong> "Swearing to God," over-explaining</p>
+                      <p className="text-slate-300 text-sm mb-1"><strong>Body:</strong> Fidgeting, avoiding eye contact, yawning</p>
+                      <p className="text-red-400 text-sm"><strong>REALITY:</strong> Nervousness ≠ probable cause</p>
+                    </div>
+                  </div>
+                </ExpandableCard>
+
+                <ExpandableCard id="interdiction" title="The Interdiction Playbook" icon="📋">
+                  <p className="text-slate-300 mb-3 text-sm">What they're trained to do:</p>
+                  <ol className="space-y-2 text-slate-300 list-decimal list-inside text-sm">
+                    <li><strong>Target Selection:</strong> Profile-based indicators before any violation</li>
+                    <li><strong>Pretext Stop:</strong> Follow until minor violation occurs (Whren)</li>
+                    <li><strong>"Consensual" Interview:</strong> Systematic interrogation about travel</li>
+                    <li><strong>Manufacturing Suspicion:</strong> Stack indicators (nervousness, air fresheners)</li>
+                    <li><strong>K-9 Gambit:</strong> Use stacked indicators to justify dog, then search</li>
                   </ol>
+                </ExpandableCard>
+              </div>
+            )}
+
+            {/* LANE 3: THE SEARCH & YOUR DEFENSE */}
+            {learnTab === 'lane3' && (
+              <div className="space-y-4 animate-in fade-in duration-500">
+
+                <ExpandableCard id="search-pattern" title="The Search Pattern" icon="🔍" defaultOpen={true}>
+                  <div className="space-y-3">
+                    <div className="bg-slate-900 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-2 text-sm">🔍 Systematic Search (Zone 1→8)</h4>
+                      <p className="text-slate-300 text-sm mb-2">NOT random - methodical:</p>
+                      <p className="text-slate-300 text-sm mb-2">Z1: Front seats • Z2-8: Console, doors, trunk, undercarriage, engine, tires, frame voids</p>
+                      <p className="text-cyan-400 text-sm"><strong>Why Know:</strong> If systematic, they're committed. DOCUMENT EVERYTHING.</p>
+                    </div>
+
+                    <div className="bg-red-900/40 border-2 border-red-500 rounded-lg p-4">
+                      <h4 className="font-bold text-red-300 mb-2 text-sm">🕳️ "Rule of Voids"</h4>
+                      <p className="text-slate-300 mb-2 text-sm">Every car has hollow spaces (door panels, frame rails). They know them.</p>
+                      <p className="text-slate-100 font-bold text-sm">REQUIRES PROBABLE CAUSE.</p>
+                      <p className="text-slate-300 text-sm">Voids ≠ "plain view"</p>
+                    </div>
+                  </div>
+                </ExpandableCard>
+
+                <ExpandableCard id="where-look" title="Where They're Trained to Look" icon="🛞">
+                  <div className="space-y-2">
+                    <div className="bg-slate-900 rounded-lg p-3">
+                      <p className="text-sm"><strong className="text-red-400">🛞 Tires:</strong> <span className="text-slate-300">Hit with mallet. "Thud"=solid (drugs), "Ring"=air (normal)</span></p>
+                    </div>
+                    <div className="bg-slate-900 rounded-lg p-3">
+                      <p className="text-sm"><strong className="text-red-400">🚗 Undercarriage:</strong> <span className="text-slate-300">Fresh welds/cuts on gas tank, disturbed undercoating</span></p>
+                    </div>
+                    <div className="bg-slate-900 rounded-lg p-3">
+                      <p className="text-sm"><strong className="text-red-400">📻 Dash/Console:</strong> <span className="text-slate-300">Non-factory switches, loose screws, vents that don't blow</span></p>
+                    </div>
+                    <div className="bg-slate-900 rounded-lg p-3">
+                      <p className="text-sm"><strong className="text-red-400">🪤 Traps:</strong> <span className="text-slate-300">Complex sequences (Defrost+Neutral+Rear Switch = hidden compartment)</span></p>
+                    </div>
+                  </div>
+
+                  <div className="bg-red-900/40 border-2 border-red-500 rounded-lg p-4 mt-4">
+                    <p className="text-slate-100 font-bold mb-2 text-sm">⚠️ CRITICAL:</p>
+                    <p className="text-slate-300 text-sm">ALL require: CONSENT, PROBABLE CAUSE, or WARRANT. Plain view ≠ hidden compartments/voids/containers.</p>
+                  </div>
+                </ExpandableCard>
+
+                <ExpandableCard id="safety-protocols" title="Safety Protocols & What to Expect" icon="🚪">
+                  <div className="space-y-3">
+                    <div className="bg-slate-900 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-2 text-sm">🚪 "Passenger Side Approach"</h4>
+                      <p className="text-slate-300 mb-2 text-sm">Approach from passenger side = avoid mirrors, surprise you, view console</p>
+                      <p className="text-cyan-400 text-sm"><strong>Know This:</strong> Tactical, not safety. Creates disorientation. Stay calm.</p>
+                    </div>
+
+                    <div className="bg-slate-900 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-2 text-sm">🚛 Trunk Check</h4>
+                      <p className="text-slate-300 mb-2 text-sm">Push down on trunk (checking latch). If it pops = search.</p>
+                      <p className="text-cyan-400 text-sm"><strong>STATE CLEARLY:</strong> "I do not consent to searches."</p>
+                    </div>
+
+                    <div className="bg-slate-900 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-2 text-sm">☠️ Fentanyl/Xylazine Risk</h4>
+                      <p className="text-slate-300 mb-2 text-sm">NEVER field test powder (aerosol risk). Special protocols, PPE required</p>
+                      <p className="text-red-400 text-sm"><strong>Why Matters:</strong> If they're taking precautions, they're assuming guilt.</p>
+                    </div>
+                  </div>
+                </ExpandableCard>
+
+                <ExpandableCard id="totality" title="Totality of Circumstances" icon="📋">
+                  <p className="text-slate-300 mb-2 text-sm">They bundle indicators together. Pile of non-criminal behaviors ≠ crime.</p>
+                  <p className="text-red-400 text-sm"><strong>Your Defense:</strong> Each must be valid.</p>
+                </ExpandableCard>
+              </div>
+            )}
+
+            {/* THE SCRIPT */}
+            {learnTab === 'script' && (
+              <div className="space-y-4 animate-in fade-in duration-500">
+
+                <ExpandableCard id="before-stop" title="Before the Stop" icon="📱" defaultOpen={true}>
+                  <div className="space-y-3">
+                    <div className="bg-slate-900 rounded-lg p-4">
+                      <p className="font-bold text-red-400 mb-2 text-sm">Preparation:</p>
+                      <ul className="ml-4 space-y-1 text-sm text-slate-300">
+                        <li>• Dashcam (front + interior, audio ON)</li>
+                        <li>• Phone ready to record</li>
+                        <li>• Docs in one place (NOT glove box)</li>
+                        <li>• GPS/directions visible</li>
+                      </ul>
+                    </div>
+                    <div className="bg-slate-900 rounded-lg p-4">
+                      <p className="font-bold text-red-400 mb-2 text-sm">Mental Prep:</p>
+                      <ul className="ml-4 space-y-1 text-sm text-slate-300">
+                        <li>• You WILL be nervous (normal)</li>
+                        <li>• You WILL want to explain (don't)</li>
+                        <li>• You WILL want to "cooperate" (trap)</li>
+                      </ul>
+                    </div>
+                  </div>
+                </ExpandableCard>
+
+                <ExpandableCard id="during-stop" title="During the Stop" icon="🛑">
+                  <div className="bg-slate-900 rounded-lg p-4">
+                    <p className="font-bold text-red-400 mb-2 text-sm">The Stop:</p>
+                    <ol className="ml-4 space-y-1 text-sm list-decimal text-slate-300">
+                      <li>Pull over safely, promptly</li>
+                      <li>Engine OFF, lights ON, hands on wheel</li>
+                      <li>Window down 2-3 inches ONLY</li>
+                      <li>DON'T reach until asked</li>
+                    </ol>
+                  </div>
+                </ExpandableCard>
+
+                <ExpandableCard id="the-script" title="The Script (MEMORIZE THIS)" icon="🗣️" defaultOpen={true}>
+                  <div className="space-y-3">
+                    <div className="bg-slate-900 border-l-4 border-blue-500 rounded p-4">
+                      <p className="font-bold text-blue-400 mb-2 text-sm">Officer asks for documents:</p>
+                      <p className="text-green-400 text-sm">"Here is my license, registration, and insurance."</p>
+                    </div>
+
+                    <div className="bg-slate-900 border-l-4 border-blue-500 rounded p-4">
+                      <p className="font-bold text-blue-400 mb-2 text-sm">Officer: "Do you know why I stopped you?"</p>
+                      <p className="text-green-400 text-sm">"No, officer."</p>
+                      <p className="text-red-400 text-xs italic mt-1">(DO NOT SPECULATE. DO NOT ADMIT.)</p>
+                    </div>
+
+                    <div className="bg-slate-900 border-l-4 border-blue-500 rounded p-4">
+                      <p className="font-bold text-blue-400 mb-2 text-sm">Officer: "Where are you coming from/going?"</p>
+                      <p className="text-green-400 text-sm">"I'm not answering questions. Am I free to go?"</p>
+                    </div>
+
+                    <div className="bg-slate-900 border-l-4 border-blue-500 rounded p-4">
+                      <p className="font-bold text-blue-400 mb-2 text-sm">Officer: "Can I search your car?"</p>
+                      <p className="text-green-400 text-sm">"I do not consent to any searches. Am I free to go?"</p>
+                    </div>
+
+                    <div className="bg-slate-900 border-l-4 border-blue-500 rounded p-4">
+                      <p className="font-bold text-blue-400 mb-2 text-sm">Officer: "Why not, if nothing to hide?"</p>
+                      <p className="text-green-400 text-sm">"I do not consent. I'm exercising my Fourth Amendment rights. Am I free to go?"</p>
+                    </div>
+
+                    <div className="bg-red-900/40 border-2 border-red-500 rounded p-4">
+                      <p className="font-bold text-red-300 mb-2 text-sm">⏰ AFTER DOCUMENTS RETURNED:</p>
+                      <p className="text-green-400 font-bold text-lg">"Am I free to go?"</p>
+                      <p className="text-slate-300 text-xs italic">(Repeat until answered)</p>
+                      <p className="text-slate-300 mt-2 text-sm"><strong>If YES:</strong> Leave immediately.</p>
+                      <p className="text-slate-300 text-sm"><strong>If NO:</strong> "Why am I being detained?"</p>
+                    </div>
+                  </div>
+                </ExpandableCard>
+
+                <ExpandableCard id="dos-donts" title="Do's and Don'ts" icon="✅">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="bg-red-900/20 rounded-lg p-4">
+                      <h4 className="font-bold text-red-400 mb-3 text-sm">❌ WHAT NOT TO DO</h4>
+                      <ul className="space-y-2 text-slate-300 text-sm">
+                        <li>• Answer questions beyond ID</li>
+                        <li>• Consent to searches</li>
+                        <li>• Exit vehicle unless ordered</li>
+                        <li>• Get argumentative</li>
+                        <li>• Lie (lying IS probable cause)</li>
+                        <li>• Physically resist</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-green-900/20 rounded-lg p-4">
+                      <h4 className="font-bold text-green-400 mb-3 text-sm">✅ WHAT TO DO</h4>
+                      <ul className="space-y-2 text-slate-300 text-sm">
+                        <li>• Stay calm, polite tone</li>
+                        <li>• Use the script</li>
+                        <li>• Record everything</li>
+                        <li>• Document badge numbers, time</li>
+                        <li>• Note everything searched</li>
+                        <li>• Ask for supervisor if searched</li>
+                      </ul>
+                    </div>
+                  </div>
+                </ExpandableCard>
+
+                <div className="bg-gradient-to-r from-red-900/30 to-red-800/20 border-2 border-red-500 rounded-xl p-6">
+                  <h3 className="text-xl font-bold mb-4 text-center text-red-400">⚖️ THE CORE TRUTH</h3>
+                  <div className="space-y-3 text-center text-slate-200 text-sm">
+                    <p className="font-bold">They are trained to work at the edge of your rights.</p>
+                    <p className="font-bold">You must know exactly where that edge is.</p>
+
+                    <div className="bg-slate-900 rounded-lg p-4 my-3 text-left">
+                      <p className="text-slate-300 text-sm mb-2">The "totality of circumstances" doctrine bundles innocent behaviors into "reasonable suspicion."</p>
+                      <p className="text-slate-300 text-sm">Your defense: Force them to articulate specific facts for each escalation.</p>
+                    </div>
+
+                    <div className="bg-yellow-900/40 border-2 border-yellow-500 rounded-lg p-4 my-4">
+                      <p className="font-bold text-yellow-400 mb-2">You cannot talk your way out of a stop.</p>
+                      <p className="font-bold text-red-400">You can only invoke your rights and document violations.</p>
+                    </div>
+
+                    <p className="font-bold text-lg uppercase mt-4">
+                      The Constitution protects you<br/>ONLY IF YOU ASSERT IT.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* The Script */}
-            <div className="bg-yellow-900/30 border-4 border-yellow-500 rounded-lg p-6">
-              <h3 className="text-2xl font-bold mb-4 text-center text-yellow-400">🗣️ THE SCRIPT (MEMORIZE THIS)</h3>
-
-              <div className="space-y-4 text-slate-200">
-                <div className="bg-slate-900 rounded p-4">
-                  <p className="font-bold text-blue-400 mb-2">Officer asks for documents:</p>
-                  <p className="text-green-400">"Here is my license, registration, and insurance."</p>
-                </div>
-
-                <div className="bg-slate-900 rounded p-4">
-                  <p className="font-bold text-blue-400 mb-2">Officer: "Do you know why I stopped you?"</p>
-                  <p className="text-green-400">"No, officer."</p>
-                  <p className="text-red-400 text-sm italic mt-1">(DO NOT SPECULATE. DO NOT ADMIT.)</p>
-                </div>
-
-                <div className="bg-slate-900 rounded p-4">
-                  <p className="font-bold text-blue-400 mb-2">Officer: "Where are you coming from/going?"</p>
-                  <p className="text-green-400">"I'm not answering questions. Am I free to go?"</p>
-                </div>
-
-                <div className="bg-slate-900 rounded p-4">
-                  <p className="font-bold text-blue-400 mb-2">Officer: "Can I search your car?"</p>
-                  <p className="text-green-400">"I do not consent to any searches. Am I free to go?"</p>
-                </div>
-
-                <div className="bg-slate-900 rounded p-4">
-                  <p className="font-bold text-blue-400 mb-2">Officer: "Why not, if nothing to hide?"</p>
-                  <p className="text-green-400">"I do not consent. I'm exercising my Fourth Amendment rights. Am I free to go?"</p>
-                </div>
-
-                <div className="bg-slate-900 rounded p-4">
-                  <p className="font-bold text-blue-400 mb-2">Officer: "I'm searching anyway"</p>
-                  <p className="text-green-400">"I do not consent, but I will not physically resist. I want this search on record as non-consensual."</p>
-                </div>
-
-                <div className="bg-slate-900 rounded p-4">
-                  <p className="font-bold text-blue-400 mb-2">Officer: "Step out of the car"</p>
-                  <p className="text-green-400">(Comply - lawful order) "Am I being detained, or am I free to go?"</p>
-                </div>
-
-                <div className="bg-red-900/40 border-2 border-red-500 rounded p-4">
-                  <p className="font-bold text-red-300 text-lg mb-2">⏰ AFTER DOCUMENTS RETURNED:</p>
-                  <p className="text-green-400 text-xl font-bold">"Am I free to go?"</p>
-                  <p className="text-slate-300 text-sm italic">(Repeat until answered)</p>
-                  <p className="text-slate-300 mt-2"><strong>If YES:</strong> Leave immediately.</p>
-                  <p className="text-slate-300"><strong>If NO:</strong> "Why am I being detained?"</p>
-                  <p className="text-slate-400 text-sm italic">(They must articulate reasonable suspicion)</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Do's and Don'ts */}
-            <div className="grid md:grid-cols-2 gap-4 mt-6">
-              <div className="bg-red-900/40 border-2 border-red-500 rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-4 text-red-400">❌ WHAT NOT TO DO</h3>
-                <ul className="space-y-2 text-slate-300 text-sm">
-                  <li>• Answer questions beyond ID</li>
-                  <li>• Consent to searches</li>
-                  <li>• Exit vehicle unless ordered</li>
-                  <li>• Get argumentative</li>
-                  <li>• Lie (lying IS probable cause)</li>
-                  <li>• Physically resist</li>
-                  <li>• Drive away / refuse to stop</li>
-                </ul>
-              </div>
-
-              <div className="bg-green-900/40 border-2 border-green-500 rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-4 text-green-400">✅ WHAT TO DO</h3>
-                <ul className="space-y-2 text-slate-300 text-sm">
-                  <li>• Stay calm, polite tone</li>
-                  <li>• Use the script</li>
-                  <li>• Record everything</li>
-                  <li>• Document badge numbers, time</li>
-                  <li>• Note everything searched</li>
-                  <li>• Ask for supervisor if searched</li>
-                  <li>• Get medical attention if K-9 bites</li>
-                </ul>
-              </div>
-            </div>
+            )}
           </div>
 
-          {/* THE CORE TRUTH */}
-          <div className="bg-red-900/40 border-4 border-red-500 rounded-lg p-8">
-            <h2 className="text-3xl font-bold mb-6 text-center text-red-400">⚖️ THE CORE TRUTH ⚖️</h2>
-
-            <div className="space-y-4 text-center text-slate-200">
-              <p className="text-xl font-bold">They are trained to work at the edge of your rights.</p>
-              <p className="text-xl font-bold">You must know exactly where that edge is.</p>
-
-              <div className="bg-slate-900 rounded-lg p-6 my-4">
-                <p className="text-slate-300 mb-3">The "totality of circumstances" doctrine bundles innocent behaviors into "reasonable suspicion."</p>
-                <p className="text-slate-300">Your defense: Force them to articulate specific, articulable facts for each escalation.</p>
-              </div>
-
-              <div className="text-lg space-y-2 my-4">
-                <p><strong className="text-blue-400">STOP:</strong> Reasonable suspicion of traffic violation</p>
-                <p><strong className="text-yellow-400">EXTENDED DETENTION:</strong> Reasonable suspicion beyond traffic</p>
-                <p><strong className="text-red-400">SEARCH:</strong> Probable cause OR your consent</p>
-              </div>
-
-              <div className="text-xl font-bold my-4">
-                <p className="mb-2">Every question develops reasonable suspicion.</p>
-                <p>Every search request tests if you know your rights.</p>
-              </div>
-
-              <div className="bg-yellow-900/40 border-4 border-yellow-500 rounded-lg p-6 my-6">
-                <p className="text-2xl font-bold text-yellow-400 mb-3">You cannot talk your way out of a stop.</p>
-                <p className="text-2xl font-bold text-red-400">You can only invoke your rights and document violations.</p>
-              </div>
-
-              <p className="text-2xl font-bold mt-6 uppercase">
-                The Constitution protects you<br/>ONLY IF YOU ASSERT IT.
-              </p>
-            </div>
-          </div>
-
-          {/* Kentucky Reality */}
-          <div className="bg-red-900/20 border-2 border-red-500 rounded-lg p-6">
-            <h2 className="text-xl font-bold mb-4 text-red-400">Kentucky Reality</h2>
-            <p className="text-slate-300 mb-2">
-              42 Kentucky agencies paid for Street Cop Training - banned in multiple states for teaching unconstitutional tactics and promoting violence.
+          {/* Kentucky Reality - Always Visible */}
+          <div className="mt-6 bg-red-900/20 border border-red-500/30 rounded-xl p-4">
+            <h3 className="font-bold mb-2 text-red-400 text-sm">Kentucky Reality</h3>
+            <p className="text-slate-300 text-xs mb-1">
+              42 Kentucky agencies paid for Street Cop Training - banned in multiple states for teaching unconstitutional tactics.
             </p>
-            <p className="text-slate-300">
+            <p className="text-slate-300 text-xs">
               Kentucky law enforcement gets 100% of civil forfeiture proceeds: 85% to seizing agency, 15% to prosecutors. D- grade from Institute for Justice.
             </p>
           </div>
         </div>
       </div>
-    </div>
-  );
-
+    );
+  };
   const renderPractice = () => {
     if (scenarioStep >= scenarios.length) {
       const correct = responses.filter(r => r).length;
