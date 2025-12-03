@@ -161,54 +161,130 @@ export default function TrafficStopSimulator() {
   ];
 
   const renderHome = () => (
-    <div className="min-h-screen bg-slate-900 text-slate-100 p-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">Kentucky Traffic Stop Simulator</h1>
-          <p className="text-slate-400 text-lg">Train on the script. Know your rights. Document encounters.</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100 p-4 md:p-6">
+      <div className="max-w-5xl mx-auto">
+        {/* Hero Section */}
+        <div className="text-center mb-8 md:mb-12 pt-6">
+          <div className="inline-block mb-4 px-4 py-1.5 bg-blue-500/10 border border-blue-500/30 rounded-full">
+            <span className="text-blue-400 text-sm font-medium">Kentucky Rights Toolkit</span>
+          </div>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            Know Your Rights.<br/>Protect Yourself.
+          </h1>
+          <p className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto">
+            Master the 3-sentence script, understand your constitutional protections, and document encounters with confidence.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
+        {/* Interactive Cards */}
+        <div className="grid md:grid-cols-3 gap-4 md:gap-6 mb-8">
+          {/* Learn Card */}
           <button
             onClick={() => setMode('learn')}
-            className="bg-slate-800 hover:bg-slate-700 p-8 rounded-lg transition-colors border-2 border-slate-700 hover:border-blue-500"
+            className="group relative bg-gradient-to-br from-blue-500/10 to-blue-600/5 hover:from-blue-500/20 hover:to-blue-600/10 p-6 md:p-8 rounded-2xl transition-all duration-300 border border-blue-500/20 hover:border-blue-500/40 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 text-left"
           >
-            <BookOpen className="w-12 h-12 mb-4 text-blue-400 mx-auto" />
-            <h2 className="text-xl font-bold mb-2">Learn</h2>
-            <p className="text-slate-400">Legal framework, case law, and the three sentences</p>
+            <div className="absolute top-4 right-4 text-blue-400/40 group-hover:text-blue-400/70 transition-colors">
+              <ChevronRight className="w-6 h-6" />
+            </div>
+            <div className="bg-blue-500/10 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-colors">
+              <BookOpen className="w-7 h-7 text-blue-400" />
+            </div>
+            <h2 className="text-xl md:text-2xl font-bold mb-2 text-white group-hover:text-blue-300 transition-colors">
+              Your Rights
+            </h2>
+            <p className="text-slate-400 text-sm md:text-base mb-4 leading-relaxed">
+              Constitutional protections, case law, and what officers are trained to look for
+            </p>
+            <div className="flex items-center gap-2 text-blue-400 font-medium text-sm">
+              <span>Start Learning</span>
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </div>
           </button>
 
+          {/* Practice Card - Featured */}
           <button
             onClick={() => { setMode('practice'); setScenarioStep(0); setResponses([]); }}
-            className="bg-slate-800 hover:bg-slate-700 p-8 rounded-lg transition-colors border-2 border-slate-700 hover:border-blue-500"
+            className="group relative bg-gradient-to-br from-green-500/10 to-emerald-600/5 hover:from-green-500/20 hover:to-emerald-600/10 p-6 md:p-8 rounded-2xl transition-all duration-300 border-2 border-green-500/30 hover:border-green-500/50 hover:shadow-xl hover:shadow-green-500/10 hover:-translate-y-1 text-left md:scale-105"
           >
-            <Target className="w-12 h-12 mb-4 text-green-400 mx-auto" />
-            <h2 className="text-xl font-bold mb-2">Practice</h2>
-            <p className="text-slate-400">Simulated scenarios to drill the script</p>
+            <div className="absolute top-3 right-3 px-2 py-1 bg-green-500 text-white text-xs font-bold rounded-full">
+              ESSENTIAL
+            </div>
+            <div className="absolute top-4 right-4 text-green-400/40 group-hover:text-green-400/70 transition-colors mt-6">
+              <ChevronRight className="w-6 h-6" />
+            </div>
+            <div className="bg-green-500/10 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:bg-green-500/20 transition-colors">
+              <Target className="w-7 h-7 text-green-400" />
+            </div>
+            <h2 className="text-xl md:text-2xl font-bold mb-2 text-white group-hover:text-green-300 transition-colors">
+              Practice Scenarios
+            </h2>
+            <p className="text-slate-400 text-sm md:text-base mb-4 leading-relaxed">
+              Train your responses to 14 real officer questions. Drill until it's instinct.
+            </p>
+            <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
+              <span>Train Now</span>
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </div>
           </button>
 
+          {/* Document Card */}
           <button
             onClick={() => setMode('document')}
-            className="bg-slate-800 hover:bg-slate-700 p-8 rounded-lg transition-colors border-2 border-slate-700 hover:border-blue-500"
+            className="group relative bg-gradient-to-br from-yellow-500/10 to-orange-600/5 hover:from-yellow-500/20 hover:to-orange-600/10 p-6 md:p-8 rounded-2xl transition-all duration-300 border border-yellow-500/20 hover:border-yellow-500/40 hover:shadow-xl hover:shadow-yellow-500/10 hover:-translate-y-1 text-left"
           >
-            <FileText className="w-12 h-12 mb-4 text-yellow-400 mx-auto" />
-            <h2 className="text-xl font-bold mb-2">Document</h2>
-            <p className="text-slate-400">Record details immediately after a stop</p>
+            <div className="absolute top-4 right-4 text-yellow-400/40 group-hover:text-yellow-400/70 transition-colors">
+              <ChevronRight className="w-6 h-6" />
+            </div>
+            <div className="bg-yellow-500/10 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:bg-yellow-500/20 transition-colors">
+              <FileText className="w-7 h-7 text-yellow-400" />
+            </div>
+            <h2 className="text-xl md:text-2xl font-bold mb-2 text-white group-hover:text-yellow-300 transition-colors">
+              Document Stop
+            </h2>
+            <p className="text-slate-400 text-sm md:text-base mb-4 leading-relaxed">
+              Record every detail while memory is fresh. Build your legal record.
+            </p>
+            <div className="flex items-center gap-2 text-yellow-400 font-medium text-sm">
+              <span>Start Recording</span>
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </div>
           </button>
         </div>
 
-        <div className="bg-red-900/20 border-2 border-red-500 rounded-lg p-6">
-          <div className="flex gap-4">
-            <AlertCircle className="w-6 h-6 text-red-400 flex-shrink-0 mt-1" />
+        {/* Quick Stats */}
+        <div className="grid grid-cols-3 gap-4 mb-8 max-w-2xl mx-auto">
+          <div className="text-center p-4 bg-slate-800/50 rounded-xl border border-slate-700/50">
+            <div className="text-2xl md:text-3xl font-bold text-blue-400 mb-1">3</div>
+            <div className="text-xs md:text-sm text-slate-400">Sentences to Master</div>
+          </div>
+          <div className="text-center p-4 bg-slate-800/50 rounded-xl border border-slate-700/50">
+            <div className="text-2xl md:text-3xl font-bold text-green-400 mb-1">14</div>
+            <div className="text-xs md:text-sm text-slate-400">Practice Scenarios</div>
+          </div>
+          <div className="text-center p-4 bg-slate-800/50 rounded-xl border border-slate-700/50">
+            <div className="text-2xl md:text-3xl font-bold text-yellow-400 mb-1">100%</div>
+            <div className="text-xs md:text-sm text-slate-400">Offline Ready</div>
+          </div>
+        </div>
+
+        {/* Reality Check - Redesigned */}
+        <div className="bg-gradient-to-r from-red-900/30 to-red-800/20 border border-red-500/30 rounded-2xl p-6 backdrop-blur-sm">
+          <div className="flex gap-4 items-start">
+            <div className="bg-red-500/20 p-3 rounded-xl flex-shrink-0">
+              <AlertCircle className="w-6 h-6 text-red-400" />
+            </div>
             <div>
-              <h3 className="font-bold mb-2 text-red-400">Critical Reality Check</h3>
-              <p className="text-slate-300">
-                This tool trains you on legal responses. It provides no physical protection. 
-                In any encounter, physical compliance with lawful orders is mandatory. 
-                Your remedy is in court, not on the roadside. Stay alive first.
+              <h3 className="font-bold mb-2 text-red-400 text-lg">This Is Not Protection</h3>
+              <p className="text-slate-300 text-sm md:text-base leading-relaxed">
+                This tool teaches legal responses, not physical safety. <strong>Always comply with lawful orders.</strong> Your remedy is in court, not on the roadside. Stay alive first.
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Footer Tagline */}
+        <div className="text-center mt-8 text-slate-500 text-sm">
+          <p>The Constitution protects you only if you assert it.</p>
         </div>
       </div>
     </div>
