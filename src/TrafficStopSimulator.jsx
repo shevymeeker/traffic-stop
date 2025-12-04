@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   AlertCircle,
   CheckCircle,
@@ -10,6 +10,7 @@ import {
   Target,
   Zap
 } from 'lucide-react';
+import { Button, Chip, FormControlLabel, Switch, Tooltip } from '@mui/material';
 import { getDocumentation, logPracticeSession, saveDocumentation } from './db';
 
 const initialDoc = {
@@ -26,7 +27,15 @@ const initialDoc = {
   passengers: '',
   recording: '',
   followUp: '',
-  personalNotes: ''
+  personalNotes: '',
+  autoUploadToACLU: false,
+  recordingType: '',
+  recordingFileName: '',
+  recordingFileSize: '',
+  recordingCapturedAt: '',
+  recordingNote: '',
+  uploadStatus: '',
+  recordingBlob: null
 };
 
 export default function TrafficStopSimulator() {
@@ -37,13 +46,15 @@ export default function TrafficStopSimulator() {
   const [loadingDoc, setLoadingDoc] = useState(true);
   const [savingDoc, setSavingDoc] = useState(false);
   const [practiceLog, setPracticeLog] = useState([]);
+  const videoInputRef = useRef(null);
+  const audioInputRef = useRef(null);
 
   useEffect(() => {
     let active = true;
     const load = async () => {
       const stored = await getDocumentation();
       if (stored && active) {
-        setDocData(stored.data || stored);
+        setDocData((prev) => ({ ...prev, ...(stored.data || stored) }));
       }
       if (active) setLoadingDoc(false);
     };
@@ -164,6 +175,57 @@ export default function TrafficStopSimulator() {
     }
   ];
 
+  const caseLaw = [
+    {
+      title: 'Whren v. United States (1996)',
+      citation: '517 U.S. 806',
+      scope: 'Federal',
+      summary: 'A traffic violation makes the stop valid regardless of officer motive. Focus on your words, not their reason for watching you.',
+      takeaway: 'Use the script and do not volunteer extra facts during pretext stops.'
+    },
+    {
+      title: 'Rodriguez v. United States (2015)',
+      citation: '575 U.S. 348',
+      scope: 'Federal',
+      summary: 'Officers cannot prolong a stop to fish for other crimes without new reasonable suspicion.',
+      takeaway: 'Ask, “Am I being detained, or am I free to go?” once the traffic business ends.'
+    },
+    {
+      title: 'Pennsylvania v. Mimms (1977)',
+      citation: '434 U.S. 106',
+      scope: 'Federal',
+      summary: 'Ordering a driver out of the vehicle is a lawful officer-safety order.',
+      takeaway: 'Comply with exit orders, then return to the three-line script.'
+    },
+    {
+      title: 'Riley v. California (2014)',
+      citation: '573 U.S. 373',
+      scope: 'Federal',
+      summary: 'Searching a phone normally requires a warrant even during arrests.',
+      takeaway: 'Lock your device and state that you do not consent to a digital search.'
+    },
+    {
+      title: 'United States v. Winters (6th Cir. 2020)',
+      citation: '782 F. App’x 485',
+      scope: 'Sixth Circuit',
+      summary: 'Extending a stop for a dog sniff needs articulable suspicion; nervousness alone is insufficient.',
+      takeaway: 'Politely challenge delays that are not tied to the traffic mission.'
+    },
+    {
+      title: 'Commonwealth v. Bucalo (Ky. 2010)',
+      citation: '422 S.W.3d 253',
+      scope: 'Kentucky',
+      summary: 'Kentucky suppresses evidence when a stop is unreasonably extended without new suspicion.',
+      takeaway: 'Kentucky courts watch the clock—note the timeline in your incident log.'
+    }
+  ];
+
+  const scopeColor = (scope) => {
+    if (scope === 'Federal') return 'primary';
+    if (scope === 'Sixth Circuit') return 'secondary';
+    return 'success';
+  };
+
   const quickSaves = [
     { label: 'Baseline', payload: initialDoc },
     {
@@ -207,13 +269,33 @@ export default function TrafficStopSimulator() {
   };
 
   const handleTemplate = (payload) => {
-    setDocData(payload);
+    setDocData((prev) => ({ ...prev, ...payload }));
   };
 
   const handleClearDocumentation = () => {
     if (window.confirm('Clear all saved documentation?')) {
       setDocData(initialDoc);
     }
+  };
+
+  const handleCapture = (event, type) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const sizeMb = `${(file.size / 1024 / 1024).toFixed(2)} MB`;
+    setDocData((prev) => ({
+      ...prev,
+      recordingType: type,
+      recordingFileName: file.name,
+      recordingFileSize: sizeMb,
+      recordingCapturedAt: new Date().toISOString(),
+      recordingBlob: file,
+      recording: prev.recording || `${type === 'video' ? 'Video' : 'Audio'} evidence attached offline.`,
+      uploadStatus: prev.uploadStatus || 'Captured offline, pending ACLU hand-off.'
+    }));
+  };
+
+  const triggerCapture = (ref) => {
+    if (ref.current) ref.current.click();
   };
 
   const modeConfig = [
@@ -348,6 +430,30 @@ export default function TrafficStopSimulator() {
             </ul>
           </div>
         ))}
+        <div className="rounded-2xl border border-white/10 bg-slate-900 p-5 space-y-3">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+            <div>
+              <p className="text-sm text-blue-200/80">Case law (offline quick deck)</p>
+              <p className="text-lg font-semibold text-white">Use the exact titles and know the level</p>
+            </div>
+            <p className="text-xs text-slate-300">Federal, Sixth Circuit, and Kentucky distinctions</p>
+          </div>
+          <div className="space-y-3">
+            {caseLaw.map((item) => (
+              <div key={item.title} className="rounded-xl bg-white/5 border border-white/10 p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="text-white font-semibold">{item.title}</p>
+                    <p className="text-xs text-blue-100/80">{item.citation}</p>
+                  </div>
+                  <Chip color={scopeColor(item.scope)} label={item.scope} size="small" variant="outlined" />
+                </div>
+                <p className="text-sm text-slate-200 mt-2">{item.summary}</p>
+                <p className="text-xs text-blue-100/80 mt-1">Field takeaway: {item.takeaway}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
       <div className="space-y-4">
         <div className="rounded-2xl border border-blue-400/40 bg-blue-900/40 p-4">
@@ -359,13 +465,9 @@ export default function TrafficStopSimulator() {
           </ul>
         </div>
         <div className="rounded-2xl border border-white/10 bg-white/5 p-4 space-y-2">
-          <p className="text-white font-semibold">Case law anchors</p>
-          <div className="text-sm text-slate-200 space-y-2">
-            <p><span className="font-semibold text-white">Whren:</span> Traffic infractions justify the stop regardless of officer motive.</p>
-            <p><span className="font-semibold text-white">Rodriguez:</span> No fishing expeditions after the mission without new suspicion.</p>
-            <p><span className="font-semibold text-white">Mimms:</span> Exiting the vehicle is a lawful order.</p>
-            <p><span className="font-semibold text-white">Riley:</span> Phones require warrants.</p>
-          </div>
+          <p className="text-white font-semibold">Why the app still works offline</p>
+          <p className="text-sm text-slate-200">The app shell is cached by the service worker, then the Dexie-powered IndexedDB stores your playbook and incident notes locally.</p>
+          <p className="text-sm text-slate-200">Reopen the Playbook tab without a signal to refresh your memory on the controlling cases and correct citations.</p>
         </div>
       </div>
     </div>
@@ -487,6 +589,86 @@ export default function TrafficStopSimulator() {
             <TextArea label="Follow-up needed" value={docData.followUp} onChange={(e) => handleDocChange('followUp', e.target.value)} />
           </div>
           <TextArea label="Personal notes" value={docData.personalNotes} onChange={(e) => handleDocChange('personalNotes', e.target.value)} />
+          <div className="rounded-2xl border border-blue-400/30 bg-blue-900/30 p-4 space-y-3">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+              <div>
+                <p className="text-white font-semibold">Recording & ACLU Mobile Justice hand-off</p>
+                <p className="text-sm text-blue-100/80">Capture media offline and flag it for upload when you regain signal.</p>
+              </div>
+              <Chip
+                color={docData.autoUploadToACLU ? 'success' : 'default'}
+                label={docData.autoUploadToACLU ? 'Auto-upload planned' : 'Manual save'}
+                size="small"
+                variant="filled"
+              />
+            </div>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={docData.autoUploadToACLU}
+                  onChange={(e) => handleDocChange('autoUploadToACLU', e.target.checked)}
+                  color="success"
+                />
+              }
+              label="When back online, push this log + media to ACLU Mobile Justice."
+              className="text-slate-100"
+            />
+            <div className="flex flex-wrap gap-3">
+              <Tooltip title="Opens the ACLU Mobile Justice hand-off page (requires connectivity when used)">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  href="https://www.mobilejusticeapp.org/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Launch ACLU Mobile Justice
+                </Button>
+              </Tooltip>
+              <Button variant="outlined" color="info" onClick={() => triggerCapture(videoInputRef)}>
+                Start video capture
+              </Button>
+              <Button variant="outlined" color="info" onClick={() => triggerCapture(audioInputRef)}>
+                Start voice capture
+              </Button>
+            </div>
+            <div className="grid md:grid-cols-2 gap-3">
+              <TextArea
+                label="Recording notes (file location, camera used)"
+                value={docData.recordingNote}
+                onChange={(e) => handleDocChange('recordingNote', e.target.value)}
+              />
+              <TextArea
+                label="Upload status (ACLU hand-off)"
+                value={docData.uploadStatus}
+                onChange={(e) => handleDocChange('uploadStatus', e.target.value)}
+              />
+            </div>
+            {docData.recordingFileName && (
+              <div className="rounded-xl bg-white/5 border border-white/10 p-3">
+                <p className="text-sm text-white font-semibold">Attached offline evidence</p>
+                <p className="text-xs text-slate-200">{docData.recordingFileName} • {docData.recordingFileSize}</p>
+                <p className="text-xs text-slate-200">Captured: {docData.recordingCapturedAt ? new Date(docData.recordingCapturedAt).toLocaleString() : ''}</p>
+                <p className="text-xs text-blue-100/80">Stored locally in IndexedDB with this log until you share it.</p>
+              </div>
+            )}
+            <input
+              ref={videoInputRef}
+              type="file"
+              accept="video/*"
+              capture="environment"
+              className="hidden"
+              onChange={(event) => handleCapture(event, 'video')}
+            />
+            <input
+              ref={audioInputRef}
+              type="file"
+              accept="audio/*"
+              capture="microphone"
+              className="hidden"
+              onChange={(event) => handleCapture(event, 'audio')}
+            />
+          </div>
         </div>
       </div>
       <div className="space-y-4">
