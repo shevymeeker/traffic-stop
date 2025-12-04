@@ -539,7 +539,7 @@ export default function TrafficStopSimulator() {
         </header>
 
         {loadingDoc ? (
-ddddddddddd          <div className="text-center text-slate-300 py-10">Loading offline data…</div>
+          <div className="text-center text-slate-300 py-10">Loading offline data…</div>
         ) : (
           <>
             {mode === 'overview' && renderOverview()}
