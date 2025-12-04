@@ -10,6 +10,9 @@
     "generate-icons": "node generate-icons.js"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.21",
     "idb": "^7.1.1",
     "lucide-react": "^0.292.0",
     "react": "^18.2.0",
