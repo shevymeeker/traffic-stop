@@ -229,11 +229,11 @@ export default function TrafficStopSimulator() {
         <div className="rounded-3xl bg-gradient-to-br from-blue-900 via-slate-900 to-slate-900 border border-blue-500/30 p-6 shadow-2xl">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-sm text-blue-200/80">Offline-first PWA Shell</p>
-              <h2 className="text-2xl font-bold text-white">Your rights, even when signal drops.</h2>
-              <p className="text-slate-200/80 mt-2">Core UI is cached. Data sits safely in IndexedDB and syncs instantly on every keystroke.</p>
+              <p className="text-sm text-blue-200/80">Quick start</p>
+              <h2 className="text-2xl font-bold text-white">Keep calm, follow the script, no signal required.</h2>
+              <p className="text-slate-200/80 mt-2">This isnt legal advice.</p>
             </div>
-            <div className="bg-blue-500/20 text-blue-200 px-3 py-2 rounded-xl text-sm border border-blue-400/30">{savingDoc ? 'Saving…' : 'Synced'}</div>
+            <div className="bg-blue-500/20 text-blue-200 px-3 py-2 rounded-xl text-sm border border-blue-400/30">{savingDoc ? 'Saving…' : 'Saved'}</div>
           </div>
           <div className="grid md:grid-cols-3 gap-3 mt-5">
             {threeLines.map((line) => (
@@ -246,23 +246,23 @@ export default function TrafficStopSimulator() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-4">
-          {[
-            {
-              title: 'Study the lanes',
-              body: 'Compact legal summaries with expandable depth for quick refresh.',
-              icon: FileText
-            },
-            {
-              title: 'Drill muscle memory',
-              body: 'Tactical simulations with instant feedback and K-9 delay checks.',
-              icon: Target
-            },
-            {
-              title: 'Document while fresh',
-              body: 'Time-stamped, offline log ready for later export.',
-              icon: Zap
-            }
-          ].map((card) => (
+            {[
+              {
+                title: 'Study the lanes',
+                body: 'Clear legal summaries with quick references.',
+                icon: FileText
+              },
+              {
+                title: 'Drill muscle memory',
+                body: 'Tactical simulations with instant feedback.',
+                icon: Target
+              },
+              {
+                title: 'Document while fresh',
+                body: 'Time-stamped log ready for later export.',
+                icon: Zap
+              }
+            ].map((card) => (
             <div key={card.title} className="rounded-2xl border border-white/10 bg-white/5 p-4">
               <div className="flex items-center gap-3">
                 <card.icon className="w-5 h-5 text-blue-300" />
@@ -281,9 +281,9 @@ export default function TrafficStopSimulator() {
             <p className="text-lg font-semibold text-white">Readiness checklist</p>
           </div>
           <ul className="text-sm text-emerald-50/90 space-y-2 mt-3 list-disc list-inside">
-            <li>Service worker caches the shell automatically.</li>
-            <li>Incident log saves to IndexedDB instantly.</li>
-            <li>Use the script cards when pressured.</li>
+            <li>Keep your three-line script handy.</li>
+            <li>Log what happens while details are clear.</li>
+            <li>Practice scenarios to stay composed.</li>
           </ul>
         </div>
         <div className="rounded-3xl border border-white/10 bg-white/5 p-4 space-y-3">
@@ -491,6 +491,8 @@ export default function TrafficStopSimulator() {
       </div>
       <div className="space-y-4">
         <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
+          <p className="text-white font-semibold">Logging tips</p>
+          <p className="text-sm text-slate-200 mt-2">Capture the officer's statements, timing, and any searches in your own words.</p>
           <p className="text-white font-semibold">App shell model</p>
           <p className="text-sm text-slate-200 mt-2">The UI loads from cache first, then this log comes from IndexedDB. No signal required after the first visit.</p>
         </div>
@@ -520,7 +522,7 @@ export default function TrafficStopSimulator() {
           <div>
             <p className="text-sm text-blue-200/80">Kentucky Rights Toolkit</p>
             <h1 className="text-3xl font-bold text-white">Traffic Stop Coach</h1>
-            <p className="text-slate-300">Offline-first PWA that drills the script, teaches the law, and logs the encounter.</p>
+            <p className="text-slate-300">Drill the script, review the law, and log the encounter.</p>
           </div>
           <div className="flex flex-wrap gap-2">
             {modeConfig.map((item) => (
@@ -537,7 +539,7 @@ export default function TrafficStopSimulator() {
         </header>
 
         {loadingDoc ? (
-          <div className="text-center text-slate-300 py-10">Loading offline data…</div>
+ddddddddddd          <div className="text-center text-slate-300 py-10">Loading offline data…</div>
         ) : (
           <>
             {mode === 'overview' && renderOverview()}

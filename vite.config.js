@@ -2,10 +2,12 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
+const isProd = process.env.NODE_ENV === 'production';
+
 export default defineConfig({
   // Set base path for GitHub Pages deployment
   // Use '/' for local dev, '/traffic-stop/' for GitHub Pages
-  base: process.env.NODE_ENV === 'production' ? '/traffic-stop/' : '/',
+  base: isProd ? '/traffic-stop/' : '/',
 
   plugins: [
     react(),
@@ -19,7 +21,8 @@ export default defineConfig({
         theme_color: '#0f172a',
         background_color: '#0f172a',
         display: 'standalone',
-        start_url: '/',
+        start_url: isProd ? '/traffic-stop/' : '/',
+        scope: isProd ? '/traffic-stop/' : '/',
         icons: [
           {
             src: 'pwa-192x192.png',
