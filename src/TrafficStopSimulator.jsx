@@ -230,8 +230,8 @@ export default function TrafficStopSimulator() {
           <div className="flex items-start justify-between">
             <div>
               <p className="text-sm text-blue-200/80">Quick start</p>
-              <h2 className="text-2xl font-bold text-white">Keep calm, follow the script, capture the facts.</h2>
-              <p className="text-slate-200/80 mt-2">Three lines to say, drills to practice, and a log that saves as you type.</p>
+              <h2 className="text-2xl font-bold text-white">Keep calm, follow the script, no signal required.</h2>
+              <p className="text-slate-200/80 mt-2">This isnt legal advice.</p>
             </div>
             <div className="bg-blue-500/20 text-blue-200 px-3 py-2 rounded-xl text-sm border border-blue-400/30">{savingDoc ? 'Saving…' : 'Saved'}</div>
           </div>
@@ -465,7 +465,7 @@ export default function TrafficStopSimulator() {
               <p className="text-sm text-blue-200/80">Incident log</p>
               <h3 className="text-2xl font-semibold text-white">Capture facts while they are fresh</h3>
             </div>
-            <div className="text-xs text-slate-200">{savingDoc ? 'Saving…' : 'Saved'}</div>
+            <div className="text-xs text-slate-200">{savingDoc ? 'Saving…' : 'Saved offline'}</div>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             <TextField label="Date" value={docData.stopDate} onChange={(e) => handleDocChange('stopDate', e.target.value)} />
@@ -493,6 +493,8 @@ export default function TrafficStopSimulator() {
         <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
           <p className="text-white font-semibold">Logging tips</p>
           <p className="text-sm text-slate-200 mt-2">Capture the officer's statements, timing, and any searches in your own words.</p>
+          <p className="text-white font-semibold">App shell model</p>
+          <p className="text-sm text-slate-200 mt-2">The UI loads from cache first, then this log comes from IndexedDB. No signal required after the first visit.</p>
         </div>
         <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
           <p className="text-white font-semibold">Controls</p>
@@ -537,7 +539,7 @@ export default function TrafficStopSimulator() {
         </header>
 
         {loadingDoc ? (
-          <div className="text-center text-slate-300 py-10">Loading saved data…</div>
+ddddddddddd          <div className="text-center text-slate-300 py-10">Loading offline data…</div>
         ) : (
           <>
             {mode === 'overview' && renderOverview()}
